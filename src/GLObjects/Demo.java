@@ -24,7 +24,7 @@ import processing.core.PVector;
 public class Demo implements GLEventListener, MouseListener, MouseMotionListener, KeyListener {
 
     private static Component emptyLabel;
-    public static boolean debuggingOn = true;
+    public static boolean debuggingOn = false;
     private static JLabel dirPosition = new JLabel();
     private static JLabel dirDirection = new JLabel();
     private static JLabel dirRight = new JLabel();
@@ -234,19 +234,38 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
     {
         int x = e.getX();
         int y = e.getY();
+
         Dimension size = e.getComponent().getSize();
 
         float thetaY = 360.0f * ((float) (x - prevMouseX) / (float) size.width);
         float thetaX = 360.0f * ((float) (prevMouseY - y) / (float) size.height);
 
-        Globals.camera.xAngle = view_rotx;
-        Globals.camera.yAngle = view_roty;
+        //Globals.camera.xAngle = view_rotx;
+        //Globals.camera.yAngle = view_roty;
+        if(x > prevMouseX)
+        {
+            Globals.camera.dirVector.yaw(-Globals.movementSensitivity);
+        }
+        if(x < prevMouseX)
+        {
+            Globals.camera.dirVector.yaw(Globals.movementSensitivity);
+        }
+        if(y > prevMouseY)
+        {
+            Globals.camera.dirVector.pitch(-Globals.movementSensitivity);
+        }
+        if(y < prevMouseY)
+        {
+            Globals.camera.dirVector.pitch(Globals.movementSensitivity);
+        }
+
 
         prevMouseX = x;
         prevMouseY = y;
 
         view_rotx += thetaX;
         view_roty += thetaY;
+
     }
     //**************************************************************************
 
@@ -306,13 +325,13 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
             case 'a':
             case 'A':
             {
-                Globals.camera.dirVector.yaw(-1);
+                Globals.camera.dirVector.strafe(-Globals.movementSensitivity);
                 break;
             }
             case 'd':
             case 'D':
             {
-                Globals.camera.dirVector.yaw(1);
+                Globals.camera.dirVector.strafe(Globals.movementSensitivity);
                 break;
             }
             case 's':

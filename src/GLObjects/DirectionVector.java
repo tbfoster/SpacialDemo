@@ -5,7 +5,7 @@ import processing.core.PVector;
 
 public final class DirectionVector {
 
-    public Matrix4d transform4D = new Matrix4d();
+    public Matrix4d transform4D = new Matrix4d(); 
     public static PVector direction = new PVector(1, 0, 0);
     public static PVector position = new PVector();
     public static PVector nRight = new PVector();
@@ -23,7 +23,7 @@ public final class DirectionVector {
         position.z = vZ;
         resetNormals();
         resetTransformationMatrix();
-        speed = 0.5f;
+        speed = 1.5f;
     }
 
     //**************************************************************************
