@@ -85,7 +85,7 @@ public class SimpleGame extends Frame implements ActionListener {
 
   /**
    * This builds the view branch of the scene graph.
-   *
+   *rew
    * @return BranchGroup with viewing objects attached.
    */
   protected BranchGroup buildViewBranch(Canvas3D c) {

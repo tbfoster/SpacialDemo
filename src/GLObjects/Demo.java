@@ -11,7 +11,6 @@ import javax.media.opengl.*;
 import javax.media.opengl.glu.*;
 import com.sun.opengl.util.*;
 import com.sun.opengl.util.j2d.*;
-import demos.util.*;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,8 +36,8 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
     public static ArrayList objectList = new ArrayList();
     private float xAng;
     private float yAng;
-    private Time time;
-    private FPSCounter fps;
+    //private Time time;
+    //private FPSCounter fps;
     private int prevMouseX, prevMouseY;
     private boolean mouseRButtonDown = false;
     private float view_rotx = 20.0f, view_roty = 30.0f, view_rotz = 0.0f;
@@ -118,7 +117,7 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         float w = (float) bounds.getWidth();
         float h = (float) bounds.getHeight();
         Globals.textScaleFactor = 1.0f / (w * 1.1f);
-        fps = new FPSCounter(drawable, 36);
+        //fps = new FPSCounter(drawable, 36);
         hud = new HeadsUpDisplay(drawable);
 
         createObjects();
@@ -127,8 +126,8 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         Globals.camera.yIncrease = .3f;
         Globals.camera.zIncrease = .3f;
 
-        time = new SystemTime();
-        ((SystemTime) time).rebase();
+        //time = new SystemTime();
+        //((SystemTime) time).rebase();
         Globals.gl.setSwapInterval(0);
         drawable.addMouseListener(this);
         drawable.addMouseMotionListener(this);
@@ -162,12 +161,12 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         }
         hud.draw();
 
-        fps.draw();
-        time.update();
+        //fps.draw();
+        //time.update();
         VScene.draw(Globals.gl);
 
-        xAng += 200 * (float) time.deltaT();
-        yAng += 150 * (float) time.deltaT();
+        //xAng += 200 * (float) time.deltaT();
+        //yAng += 150 * (float) time.deltaT();
     }
 
     //**************************************************************************

@@ -1,5 +1,6 @@
 package GLObjects;
 
+import GLObjects.PGraphicsOpenGL;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
@@ -10,17 +11,25 @@ import java.util.ArrayList;
 import javax.media.opengl.GL;
 
 import mri.v3ds.Exception3ds;
+import mri.v3ds.Exception3ds;
+import mri.v3ds.Face3ds;
 import mri.v3ds.Face3ds;
 import mri.v3ds.FaceMat3ds;
+import mri.v3ds.FaceMat3ds;
+import mri.v3ds.Material3ds;
 import mri.v3ds.Material3ds;
 import mri.v3ds.Mesh3ds;
+import mri.v3ds.Mesh3ds;
+import mri.v3ds.Scene3ds;
 import mri.v3ds.Scene3ds;
 import mri.v3ds.TexCoord3ds;
+import mri.v3ds.TexCoord3ds;
 import mri.v3ds.TextDecode3ds;
+import mri.v3ds.TextDecode3ds;
+import mri.v3ds.Vertex3ds;
 import mri.v3ds.Vertex3ds;
 import processing.core.*;
 import processing.core.PVector;
-import processing.opengl.PGraphicsOpenGL;
 
 //**************************************************************************
 public final class V3dsScene {
@@ -246,7 +255,7 @@ public final class V3dsScene {
                     };
             mmat.diffuse = new float[]
                     {
-                        mat.diffuse().red(), mat.diffuse().green(), mat.diffuse().blue(), mat.transparency()
+                        mat.diffuse().red(), mat.diffuse().green(), mat.diffuse().blue(), 0 //mat.transparency()
                     };
             mmat.specular = new float[]
                     {
@@ -254,7 +263,7 @@ public final class V3dsScene {
                     };
             mmat.textureName = mat.mapName();
 
-            System.out.println("name: " + mat.name() + " -- " + mat.ambient().red() + ", " + mat.ambient().green() + ", " + mat.ambient().blue() + ",  transparency: " + mat.transparency());
+            System.out.println("name: " + mat.name() + " -- " + mat.ambient().red() + ", " + mat.ambient().green() + ", " + mat.ambient().blue() + ",  transparency: " + 0);
             System.out.println(mat.diffuse().red() + ", " + mat.diffuse().green() + ", " + mat.diffuse().blue());
             System.out.println(mat.specular().red() + ", " + mat.specular().green() + ", " + mat.specular().blue());
             System.out.println("map: " + mat.mapName());
