@@ -34,8 +34,8 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
     private static JLabel dirMatrix = new JLabel();
     private V3dsScene VScene;
     public static ArrayList objectList = new ArrayList();
-    private float xAng;
-    private float yAng;
+    //private float xAng;
+    //private float yAng;
     //private Time time;
     //private FPSCounter fps;
     private int prevMouseX, prevMouseY;
