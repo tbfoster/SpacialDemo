@@ -19,6 +19,7 @@ public class Globals {
     public static Timer timerObjectInterval1 = new Timer();
     public static Timer timerObjectInterval2 = new Timer();
     public static CameraView camera;
+    public static int genListIndex = 1;
 }
 //******************************************************************************
 
