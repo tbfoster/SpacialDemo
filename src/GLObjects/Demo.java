@@ -136,6 +136,7 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         //VScene = new V3dsScene();
         //VScene = new V3dsScene(Globals.gl, "sponza.3ds");
         VScene = new V3dsScene(Globals.gl, "test.3ds");
+        //VScene = new V3dsScene(Globals.gl, "Beast.3ds");
     }
 
     //**************************************************************************
