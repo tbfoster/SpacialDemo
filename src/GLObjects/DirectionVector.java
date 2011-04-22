@@ -5,7 +5,7 @@ import processing.core.PVector;
 
 public final class DirectionVector {
 
-    public Matrix4d transform4D = new Matrix4d(); 
+    public Matrix4d transform4D = new Matrix4d();
     public static PVector direction = new PVector(1, 0, 0);
     public static PVector position = new PVector();
     public static PVector nRight = new PVector();
@@ -13,7 +13,7 @@ public final class DirectionVector {
     public static PVector nTarget = new PVector();
     public static PVector plotPosition = new PVector();
     public float zoomFactor = 2f;
-    public float speed = 0;
+    public float speed = 0.8f, max_speed = 5;
 
     //**************************************************************************
     public DirectionVector(float vX, float vY, float vZ)
@@ -23,10 +23,19 @@ public final class DirectionVector {
         position.z = vZ;
         resetNormals();
         resetTransformationMatrix();
-        speed = 1.5f;
     }
-
     //**************************************************************************
+
+    public void setPosition(float vX, float vY, float vZ)
+    {
+        position.x = vX;
+        position.y = vY;
+        position.z = vZ;
+        resetNormals();
+        resetTransformationMatrix();
+    }
+    //**************************************************************************
+
     public void resetNormals()
     {
         nRight.x = 0;
@@ -58,7 +67,8 @@ public final class DirectionVector {
         plotPosition.y = vPlotPosition.y;
         plotPosition.z = vPlotPosition.z;
 
-        vTarget = PVector.sub(plotPosition, position);
+        vTarget = cgVecSub(plotPosition, position);
+        //PVector.sub(plotPosition, position);
         projectedTarget = vTarget;
 
         if ((Math.abs(vTarget.x) < 0.00001) && (Math.abs(vTarget.z) < 0.00001))
@@ -69,8 +79,10 @@ public final class DirectionVector {
             nRight.y = 0f;
             nRight.z = 0f;
             PVector temp = new PVector();
-            nUp = temp.cross(projectedTarget, nRight);
+            nUp = cgCrossProduct(projectedTarget, nRight);
+            //nUp = temp.cross(projectedTarget, nRight);
             nTarget = vTarget;
+
             nRight = PVector.mult(temp.cross(nTarget, nUp), -1);
         } else
         {
@@ -148,6 +160,40 @@ public final class DirectionVector {
     }
     //**************************************************************************
 
+    public PVector cgVecSub(PVector v1, PVector v2)
+    {
+        PVector vVector = new PVector();
+        vVector.x = v1.x - v2.x;
+        vVector.y = v1.y - v2.y;
+        vVector.z = v1.z - v2.z;
+
+        return vVector;
+    }
+    //**************************************************************************
+
+    public PVector cgVecMult(PVector v1, PVector v2)
+    {
+        //int i, j;
+        PVector vVector = new PVector();
+        //for(i=0; i<4; i++)
+        // {
+        //    vVector[i,j] = v1.[i] * v2[j];
+        // }
+
+        //function cgVecMult(v1, v2: TCGVector): TCGMatrix;
+        //var
+        //i, j: Integer;
+        //begin
+        // Multiply a row and a column vector, resulting in a 4x4 matrix.
+        //for i := 0 to 3 do
+        //begin
+        //    for j := 0 to 3 do
+        //begin
+        //Result[i,j] := TAVector(v1)[i] * TAVector(v2)[j];
+        return vVector;
+    }
+
+    //**************************************************************************
     public PVector cgCrossProduct(PVector v1, PVector v2)
     {
         PVector vVector = new PVector();
@@ -188,6 +234,22 @@ public final class DirectionVector {
         position.x = position.x - (nTarget.x * speed);
         position.y = position.y - (nTarget.y * speed);
         position.z = position.z - (nTarget.z * speed);
+    }
+    //**************************************************************************
+
+    public void increaseSpeed()
+    {
+        speed = speed + Globals.increaseSpeedInterval;
+    }
+
+    //**************************************************************************
+    public void decreaseSpeed()
+    {
+        speed = speed - Globals.increaseSpeedInterval;
+        if (speed < 0)
+        {
+            speed = 0;
+        }
     }
     //**************************************************************************
 }
