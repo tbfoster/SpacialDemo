@@ -1,25 +1,24 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package GLObjects;
+
+import javax.media.opengl.GL;
+import javax.media.opengl.glu.GLU;
 
 public class SpacialLines extends SpacialObject {
     float EndX, EndY, EndZ;
 
-    public SpacialLines(float vX, float vY, float vZ)
+    public SpacialLines(GL vgl, GLU vglu, float vX, float vY, float vZ)
     {
-        super(vX, vY, vZ);
+        super(vgl, vglu, vX, vY, vZ);
     }
 
     //**************************************************************************
     @Override
     public void draw()
     {
-        Globals.gl.glBegin(Globals.gl.GL_LINES);
-        Globals.gl.glVertex3f(X, Y, Z); // origin of the line
-        Globals.gl.glVertex3f(200.0f, 140.0f, 5.0f); // ending point of the line
-        Globals.gl.glEnd();
+        gl.glBegin(gl.GL_LINES);
+        gl.glVertex3f(X, Y, Z); // origin of the line
+        gl.glVertex3f(200.0f, 140.0f, 5.0f); // ending point of the line
+        gl.glEnd();
 
     }
     //**************************************************************************

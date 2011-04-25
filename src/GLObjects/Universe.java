@@ -2,6 +2,8 @@ package GLObjects;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.media.opengl.GL;
+import javax.media.opengl.glu.GLU;
 
 public class Universe {
 
@@ -10,20 +12,20 @@ public class Universe {
     SpacialPlane plane1, plane2;
 
 //**************************************************************************
-    public void createObjects()
+    public void createObjects(GL gl, GLU glu)
     {
-        SpacialSphere sphere1 = new SpacialSphere(3, 2, 3);
+        SpacialSphere sphere1 = new SpacialSphere(gl, glu, 3, 2, 3);
         sphere1.xIncrease = .03f;
 
-        sCube = new SpacialCube(-3, -1, 0);
+        sCube = new SpacialCube(gl, glu, -3, -1, 0);
         objectList.add(sCube);
-        sCube2 = new SpacialCube(3, 1, 0);
+        sCube2 = new SpacialCube(gl, glu, 3, 1, 0);
         sCube2.xIncrease = .25f;
         objectList.add(sCube2);
-        plane1 = new SpacialPlane(-2, -1, 0);
+        plane1 = new SpacialPlane(gl, glu, -2, -1, 0);
         plane1.setColor(.7f, .8f, .2f);
         objectList.add(plane1);
-        plane2 = new SpacialPlane(-2, 2, 0);
+        plane2 = new SpacialPlane(gl, glu, -2, 2, 0);
         plane2.setColor(.3f, .4f, .6f);
         plane2.xAngle = 90;
         plane2.zIncrease = .13f;
@@ -32,17 +34,17 @@ public class Universe {
 
         for (int i = 1; i < 10; i++)
         {
-            SpacialSphere tSphere = new SpacialSphere(i, 0, 0);
+            SpacialSphere tSphere = new SpacialSphere(gl, glu, i, 0, 0);
             objectList.add(tSphere);
         }
         for (int i = 1; i < 10; i++)
         {
-            SpacialSphere tSphere = new SpacialSphere(0, i, 0);
+            SpacialSphere tSphere = new SpacialSphere(gl, glu, 0, i, 0);
             objectList.add(tSphere);
         }
         for (int i = 1; i < 10; i++)
         {
-            SpacialSphere tSphere = new SpacialSphere(0, 0, i);
+            SpacialSphere tSphere = new SpacialSphere(gl, glu, 0, 0, i);
             objectList.add(tSphere);
         }
     }

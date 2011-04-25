@@ -1,6 +1,9 @@
 // **** Latest
 package GLObjects;
 
+import javax.media.opengl.GL;
+import javax.media.opengl.glu.GLU;
+
 public class SpacialObject {
 
     public float X;
@@ -12,10 +15,13 @@ public class SpacialObject {
     public float R;
     public float G;
     public float B;
+    public static GL gl;
+    public static GLU glu;
+
 
     //**************************************************************************
 
-    public SpacialObject(float vX, float vY, float vZ)
+    public SpacialObject(GL vgl, GLU vglu, float vX, float vY, float vZ)
     {
         X = vX;
         Y = vY;
@@ -23,6 +29,8 @@ public class SpacialObject {
         R = 1;
         G = 1;
         B = 1;
+        gl = vgl;
+        glu = vglu;
     }
 
     //**************************************************************************
@@ -59,21 +67,21 @@ public class SpacialObject {
 
     public void rotateX()
     {
-        Globals.gl.glRotatef(xAngle, 1, 0, 0);
+        gl.glRotatef(xAngle, 1, 0, 0);
     }
 
     //**************************************************************************
 
     public void rotateY()
     {
-        Globals.gl.glRotatef(yAngle, 0, 1, 0);
+        gl.glRotatef(yAngle, 0, 1, 0);
     }
 
     //**************************************************************************
 
     public void rotateZ()
     {
-        Globals.gl.glRotatef(zAngle, 0, 0, 1);
+        gl.glRotatef(zAngle, 0, 0, 1);
     }
 
     //**************************************************************************

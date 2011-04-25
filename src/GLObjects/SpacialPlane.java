@@ -1,12 +1,13 @@
 package GLObjects;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.glu.GLU;
 
 public class SpacialPlane extends SpacialObject {
 
-    public SpacialPlane(float vX, float vY, float vZ)
+    public SpacialPlane(GL vgl, GLU vglu, float vX, float vY, float vZ)
     {
-        super(vX, vY, vZ);
+        super(vgl, vglu, vX, vY, vZ);
     }
 
     //**************************************************************************
@@ -15,21 +16,21 @@ public class SpacialPlane extends SpacialObject {
     public void draw()
     {
         float size = 1;
-        Globals.gl.glPushMatrix();
+        gl.glPushMatrix();
 
-        Globals.gl.glTranslatef(X, Y, Z);
-        Globals.gl.glColor3f(R, Z, B);
+        gl.glTranslatef(X, Y, Z);
+        gl.glColor3f(R, Z, B);
         rotateX();
         rotateY();
         rotateZ();
-        Globals.gl.glBegin(GL.GL_QUADS);
-        Globals.gl.glVertex3f(-size, -size, size);
-        Globals.gl.glVertex3f(size, -size, size);
-        Globals.gl.glVertex3f(size, size, size);
-        Globals.gl.glVertex3f(-size, size, size);
-        Globals.gl.glEnd();
+        gl.glBegin(GL.GL_QUADS);
+        gl.glVertex3f(-size, -size, size);
+        gl.glVertex3f(size, -size, size);
+        gl.glVertex3f(size, size, size);
+        gl.glVertex3f(-size, size, size);
+        gl.glEnd();
 
-        Globals.gl.glPopMatrix();
+        gl.glPopMatrix();
     }
 
     //**************************************************************************

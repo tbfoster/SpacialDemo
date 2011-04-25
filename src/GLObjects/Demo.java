@@ -19,8 +19,11 @@ import processing.core.PVector;
 //**************************************************************************
 public class Demo implements GLEventListener, MouseListener, MouseMotionListener, KeyListener {
 
+    public static GL gl;
+    public static GLU glu;
     public static boolean debuggingOn = false;
     private V3dsScene VScene;
+    CameraView camera;
     Universe universe;
     HeadsUpDisplay hud;
     Commands commands;
@@ -30,13 +33,10 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
     {
         Frame frame = new Frame("Text Cube");
         frame.setLayout(new BorderLayout());
-
         GLCanvas canvas = new GLCanvas();
         final Demo demo = new Demo();
-
         canvas.addGLEventListener(demo);
         frame.add(canvas, BorderLayout.CENTER);
-
         frame.setSize(1024, 768);
         final Animator animator = new Animator(canvas);
 
@@ -90,10 +90,11 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
     public void init(GLAutoDrawable drawable)
     {
         Globals.renderer = new TextRenderer(new Font("SansSerif", Font.PLAIN, 18));
-        Globals.glu = new GLU();
-        Globals.gl = drawable.getGL();
-        Globals.gl.glEnable(GL.GL_DEPTH_TEST);
-        Globals.camera = new CameraView();
+        glu = new GLU();
+        gl = drawable.getGL();
+        gl.glEnable(GL.GL_DEPTH_TEST);
+        camera = new CameraView();
+
         Rectangle2D bounds = Globals.renderer.getBounds("Bottom");
         float w = (float) bounds.getWidth();
         float h = (float) bounds.getHeight();
@@ -101,40 +102,40 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         universe = new Universe();
         hud = new HeadsUpDisplay(drawable);
         commands = new Commands();
-        universe.createObjects();
-        Globals.gl.setSwapInterval(0);
+        universe.createObjects(gl, glu);
+        gl.setSwapInterval(0);
         drawable.addMouseListener(this);
         drawable.addMouseMotionListener(this);
         drawable.addKeyListener(this);
-        Globals.gl = drawable.getGL();
+        gl = drawable.getGL();
 
-        //VScene = new V3dsScene(Globals.gl, "sponza.3ds");
-        VScene = new V3dsScene(Globals.gl, "test.3ds");
-        //VScene = new V3dsScene(Globals.gl, "Beast.3ds");
+        //VScene = new V3dsScene(gl, "sponza.3ds");
+        VScene = new V3dsScene(gl, "test.3ds");
+        //VScene = new V3dsScene(gl, "Beast.3ds");
     }
 
     //**************************************************************************
     @Override
     public void display(GLAutoDrawable drawable)
     {
-        Globals.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-        Globals.gl.glMatrixMode(GL.GL_MODELVIEW);
-        Globals.gl.glLoadIdentity();
-        Globals.camera.draw();
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+        gl.glMatrixMode(GL.GL_MODELVIEW);
+        gl.glLoadIdentity();
+        camera.draw(glu);
         commands.movementTimer();
         universe.draw();
         hud.draw();
-        VScene.draw(Globals.gl);
+        VScene.draw(gl);
     }
 
     //**************************************************************************
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height)
     {
-        Globals.gl = drawable.getGL();
-        Globals.gl.glMatrixMode(GL.GL_PROJECTION);
-        Globals.gl.glLoadIdentity();
-        Globals.glu.gluPerspective(55, (float) width / (float) height, 5, 155);
+        gl = drawable.getGL();
+        gl.glMatrixMode(GL.GL_PROJECTION);
+        gl.glLoadIdentity();
+        glu.gluPerspective(55, (float) width / (float) height, 5, 155);
     }
 
     //**************************************************************************
