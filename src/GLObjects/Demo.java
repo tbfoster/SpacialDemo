@@ -1,5 +1,6 @@
 package GLObjects;
 
+import mri.v3ds.V3dsScene;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Frame;
@@ -135,7 +136,7 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         gl = drawable.getGL();
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(55, (float) width / (float) height, 5, 155);
+        glu.gluPerspective(45, (float) width / (float) height, 5, 555);
     }
 
     //**************************************************************************

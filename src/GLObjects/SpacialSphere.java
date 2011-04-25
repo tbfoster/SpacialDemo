@@ -13,11 +13,6 @@ import javax.media.opengl.glu.GLUquadric;
 
 public class SpacialSphere extends SpacialObject {
 
-    private static Object getLogger(String name)
-    {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
     int genList;
     public GLUquadric quadric;
     private static ByteBuffer imageBuf1;
@@ -38,8 +33,17 @@ public class SpacialSphere extends SpacialObject {
     {
         genList = gl.glGenLists(Globals.genListIndex);
         gl.glNewList(genList, gl.GL_COMPILE);
-        //gl.glBindTexture(gl.GL_TEXTURE_2D, texture);
-        gl.glEnable(gl.GL_TEXTURE_2D);
+
+        gl.glColor3f(R, G, B);
+        text.setTexParameteri(gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR);
+        text.setTexParameteri(gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR);
+        text.setTexParameterf(gl.GL_TEXTURE_WRAP_S, gl.GL_REPEAT);
+        text.setTexParameterf(gl.GL_TEXTURE_WRAP_T, gl.GL_REPEAT);
+        gl.glTexEnvf(gl.GL_TEXTURE_ENV, gl.GL_TEXTURE_ENV_MODE, gl.GL_DECAL);
+        glu.gluQuadricNormals(quadric, GLU.GLU_SMOOTH);  // Create Smooth Normals (NEW)
+        glu.gluQuadricTexture(quadric, true);            // Create Texture Coords (NEW)
+        glu.gluSphere(quadric, 3.5f, 32, 32);
+
         gl.glEndList();
     }
 
@@ -48,33 +52,19 @@ public class SpacialSphere extends SpacialObject {
     public void draw()
     {
         gl.glPushMatrix();
+
         gl.glTranslatef(X, Y, Z);
-        gl.glColor3f(R, G, B);
         rotateX();
         rotateY();
         rotateZ();
+        gl.glCallList(genList);
 
-        gl.glEnable(gl.GL_TEXTURE_2D);
-        text.setTexParameteri(gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR);
-        text.setTexParameteri(gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR);
-        text.bind();
-        text.enable();
-
-        
-        gl.glTexParameterf(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_WRAP_S, gl.GL_REPEAT);
-        gl.glTexParameterf(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_WRAP_T, gl.GL_REPEAT);
-        
-        gl.glTexEnvf(gl.GL_TEXTURE_ENV, gl.GL_TEXTURE_ENV_MODE, gl.GL_DECAL);
-        glu.gluQuadricNormals(quadric, GLU.GLU_SMOOTH);  // Create Smooth Normals (NEW)
-        glu.gluQuadricTexture(quadric, true);            // Create Texture Coords (NEW)
-        glu.gluSphere(quadric, .1f, 32, 32);
         gl.glPopMatrix();
     }
     //**************************************************************************
 
     public static void LoadGLTextures()
     {
-
         BufferedImage image = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
         try
         {
@@ -83,11 +73,7 @@ public class SpacialSphere extends SpacialObject {
         {
             System.out.println(ex.getMessage());
         }
-            text = TextureIO.newTexture(image, false);
-            
-            //text.setTexParameteri(gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR);
-            //text.setTexParameteri(gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR);
-            //text.bind();
-
+        text = TextureIO.newTexture(image, false);
     }
+    //**************************************************************************
 }

@@ -147,24 +147,22 @@ public class Commands {
     {
         int x = e.getX();
         int y = e.getY();
-        //float thetaY = 360.0f * ((float) (x - prevMouseX) / (float) size.width);
-        //float thetaX = 360.0f * ((float) (prevMouseY - y) / (float) size.height);
 
         if (x > prevMouseX)
         {
-            CameraView.dirVector.yaw(-Globals.movementSensitivity);
+            CameraView.dirVector.yaw(-Globals.mouseSensitivity);
         }
         if (x < prevMouseX)
         {
-            CameraView.dirVector.yaw(Globals.movementSensitivity);
+            CameraView.dirVector.yaw(Globals.mouseSensitivity);
         }
         if (y > prevMouseY)
         {
-            CameraView.dirVector.pitch(-Globals.movementSensitivity);
+            CameraView.dirVector.pitch(-Globals.mouseSensitivity);
         }
         if (y < prevMouseY)
         {
-            CameraView.dirVector.pitch(Globals.movementSensitivity);
+            CameraView.dirVector.pitch(Globals.mouseSensitivity);
         }
         prevMouseX = x;
         prevMouseY = y;

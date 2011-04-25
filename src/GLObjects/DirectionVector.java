@@ -13,7 +13,7 @@ public final class DirectionVector {
     public static PVector nTarget = new PVector();
     public static PVector plotPosition = new PVector();
     public float zoomFactor = 2f;
-    public float speed = 0.8f, max_speed = 5;
+    public float speed = 0.05f, max_speed = 5;
 
     //**************************************************************************
     public DirectionVector(float vX, float vY, float vZ)
@@ -240,6 +240,10 @@ public final class DirectionVector {
     public void increaseSpeed()
     {
         speed = speed + Globals.increaseSpeedInterval;
+        if (speed > max_speed)
+        {
+            speed = max_speed;
+        }
     }
 
     //**************************************************************************

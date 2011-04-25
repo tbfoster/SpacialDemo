@@ -15,7 +15,12 @@ public class Universe {
     public void createObjects(GL gl, GLU glu)
     {
         SpacialSphere sphere1 = new SpacialSphere(gl, glu, 3, 2, 3);
-        sphere1.xIncrease = .03f;
+        sphere1.xIncrease = .13f;
+        sphere1.compile();
+
+        SpacialSphere sphere2 = new SpacialSphere(gl, glu, -3, -2, 3);
+        sphere2.yIncrease = .33f;
+        sphere2.compile();
 
         sCube = new SpacialCube(gl, glu, -3, -1, 0);
         objectList.add(sCube);
@@ -31,22 +36,29 @@ public class Universe {
         plane2.zIncrease = .13f;
         objectList.add(plane2);
         objectList.add(sphere1);
+        objectList.add(sphere2);
+        /*
 
-        for (int i = 1; i < 10; i++)
+        for (int i = 1; i < 1; i++)
         {
             SpacialSphere tSphere = new SpacialSphere(gl, glu, i, 0, 0);
+            tSphere.compile();
             objectList.add(tSphere);
         }
-        for (int i = 1; i < 10; i++)
+        for (int i = 1; i < 1; i++)
         {
             SpacialSphere tSphere = new SpacialSphere(gl, glu, 0, i, 0);
+            tSphere.compile();
             objectList.add(tSphere);
         }
-        for (int i = 1; i < 10; i++)
+        for (int i = 1; i < 1; i++)
         {
             SpacialSphere tSphere = new SpacialSphere(gl, glu, 0, 0, i);
+            tSphere.compile();
             objectList.add(tSphere);
         }
+         * 
+         */
     }
     //**************************************************************************
 
