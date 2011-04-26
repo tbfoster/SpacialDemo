@@ -17,10 +17,9 @@ public class SpacialObject {
     public float B;
     public static GL gl;
     public static GLU glu;
-
+    int genListID;
 
     //**************************************************************************
-
     public SpacialObject(GL vgl, GLU vglu, float vX, float vY, float vZ)
     {
         X = vX;
@@ -34,7 +33,6 @@ public class SpacialObject {
     }
 
     //**************************************************************************
-
     public void setColor(float vR, float vG, float vB)
     {
         R = vR;
@@ -43,20 +41,24 @@ public class SpacialObject {
     }
 
     //**************************************************************************
-
     public void increaseX(float vX)
     {
         xAngle = xAngle + vX;
-        if(xAngle > 360) xAngle = 0;
+        if (xAngle > 360)
+        {
+            xAngle = 0;
+        }
     }
 
     //**************************************************************************
-
     public void draw()
     {
     }
+    //**************************************************************************
 
-    
+    public void compile()
+    {
+    }
     //**************************************************************************
 
     public void reSize()
@@ -64,38 +66,41 @@ public class SpacialObject {
     }
 
     //**************************************************************************
-
     public void rotateX()
     {
         gl.glRotatef(xAngle, 1, 0, 0);
     }
 
     //**************************************************************************
-
     public void rotateY()
     {
         gl.glRotatef(yAngle, 0, 1, 0);
     }
 
     //**************************************************************************
-
     public void rotateZ()
     {
         gl.glRotatef(zAngle, 0, 0, 1);
     }
 
     //**************************************************************************
-
     public void nextInterval()
     {
         xAngle = xAngle + xIncrease;
-        if(xAngle > 360) xAngle = 0;
+        if (xAngle > 360)
+        {
+            xAngle = 0;
+        }
         yAngle = yAngle + yIncrease;
-        if(yAngle > 360) yAngle = 0;
+        if (yAngle > 360)
+        {
+            yAngle = 0;
+        }
         zAngle = zAngle + zIncrease;
-        if(zAngle > 360) zAngle = 0;
+        if (zAngle > 360)
+        {
+            zAngle = 0;
+        }
     }
-
     //**************************************************************************
-
 }

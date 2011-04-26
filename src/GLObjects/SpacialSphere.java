@@ -1,6 +1,7 @@
 package GLObjects;
 
 import com.sun.opengl.util.texture.Texture;
+import com.sun.opengl.util.texture.TextureData;
 import com.sun.opengl.util.texture.TextureIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,7 +14,6 @@ import javax.media.opengl.glu.GLUquadric;
 
 public class SpacialSphere extends SpacialObject {
 
-    int genList;
     public GLUquadric quadric;
     private static ByteBuffer imageBuf1;
     public static Texture text;
@@ -25,14 +25,14 @@ public class SpacialSphere extends SpacialObject {
         quadric = glu.gluNewQuadric();
         glu.gluQuadricNormals(quadric, GLU.GLU_SMOOTH);  // Create Smooth Normals (NEW)
         glu.gluQuadricTexture(quadric, true);
-        LoadGLTextures();
+        //LoadGLTextures();
     }
     //**************************************************************************
 
     public void compile()
     {
-        genList = gl.glGenLists(Globals.genListIndex);
-        gl.glNewList(genList, gl.GL_COMPILE);
+        genListID = gl.glGenLists(Globals.genListIndex);
+        gl.glNewList(genListID, gl.GL_COMPILE);
 
         gl.glColor3f(R, G, B);
         text.setTexParameteri(gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR);
@@ -57,18 +57,19 @@ public class SpacialSphere extends SpacialObject {
         rotateX();
         rotateY();
         rotateZ();
-        gl.glCallList(genList);
+        gl.glCallList(genListID);
 
         gl.glPopMatrix();
     }
     //**************************************************************************
 
-    public static void LoadGLTextures()
+    public static void LoadGLTextures(String vFilename)
     {
         BufferedImage image = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
         try
         {
-            image = ImageIO.read(new File("/home/tbfoster/NetBeansProjects/SpacialDemo/data/NeHe.png"));
+            image = ImageIO.read(new File(vFilename));
+                    
         } catch (IOException ex)
         {
             System.out.println(ex.getMessage());
