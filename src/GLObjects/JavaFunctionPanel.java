@@ -21,6 +21,7 @@ public class JavaFunctionPanel extends SpacialObject {
     {
         super(vgl, vglu, vX, vY, vZ);
         functionName = vName;
+        compile();
         //LoadGLTextures();
     }
 
@@ -28,11 +29,41 @@ public class JavaFunctionPanel extends SpacialObject {
     @Override
     public void compile()
     {
+        float faceSize = 04f;
+        float halfFaceSize = faceSize / 2;
+
+        genListID = gl.glGenLists(Globals.genListIndex);
+        gl.glNewList(genListID, gl.GL_COMPILE);
+
+        gl.glColor3f(R, G, B);
+        Globals.renderer.begin3DRendering();
+        gl.glDisable(GL.GL_DEPTH_TEST);
+        //gl.glEnable(GL.GL_CULL_FACE);
+        Rectangle2D bounds = Globals.renderer.getBounds(functionName);
+        float w = (float) bounds.getWidth();
+        float h = (float) bounds.getHeight();
+        Globals.renderer.draw3D(functionName, w / -2.0f * Globals.textScaleFactor, h / -2.0f * Globals.textScaleFactor, halfFaceSize, Globals.textScaleFactor);
+        Globals.renderer.end3DRendering();
+
+        gl.glEndList();
     }
     //**************************************************************************
 
     @Override
     public void draw()
+    {
+        gl.glPushMatrix();
+
+        gl.glTranslatef(X, Y, Z);
+        rotateX();
+        rotateY();
+        rotateZ();
+        gl.glCallList(genListID);
+
+        gl.glPopMatrix();
+    }
+
+    public void draw2()
     {
         float faceSize = 04f;
         float halfFaceSize = faceSize / 2;
