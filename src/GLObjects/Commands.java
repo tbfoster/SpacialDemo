@@ -2,6 +2,7 @@ package GLObjects;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import processing.core.PVector;
 
 //******************************************************************************
 public class Commands {
@@ -62,6 +63,9 @@ public class Commands {
                 }
                 break;
             }
+            case 't':
+                CameraView.dirVector.setTarget(new PVector(-3f, -2f, 3f));
+                break;
         }
     }
 

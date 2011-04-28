@@ -34,11 +34,12 @@ class TextToImageDemo {
         int h = (int) bounds.getHeight();
         BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = image.createGraphics();
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, w, h);
         g.setColor(Color.BLACK);
+        g.fillRect(0, 0, w, h);
+        g.setColor(Color.GREEN);
         g.setFont(font);
-        g.drawString(sampleText, (float) bounds.getX(), (float) -bounds.getY());
+        //g.drawString(sampleText, (float) bounds.getX(), (float) -bounds.getY());
+        g.drawString(test.toString(), (float) bounds.getX(), (float) -bounds.getY());
         g.dispose();
         boolean write = ImageIO.write(image, "jpg", newFile);
         System.out.println(write);

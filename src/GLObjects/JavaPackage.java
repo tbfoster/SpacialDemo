@@ -15,6 +15,12 @@ public class JavaPackage extends SpacialObject {
         super(vgl, vglu, vX, vY, vZ);
         //LoadGLTextures();
     }
+
+    JavaPackage(GL vgl, GLU vglu, float vX, float vY, float vZ, String vPackageName)
+    {
+        super(vgl, vglu, vX, vY, vZ);
+        packageName = vPackageName;
+    }
     //**************************************************************************
 
     @Override
@@ -31,6 +37,9 @@ public class JavaPackage extends SpacialObject {
 
         gl.glPushMatrix();
         gl.glTranslatef(X, Y, Z);
+        rotateX();
+        rotateY();
+        rotateZ();
 
         gl.glColor3f(R, G, B);
         Globals.renderer.begin3DRendering();

@@ -22,6 +22,9 @@ public class SpacialObject {
     //**************************************************************************
     public SpacialObject(GL vgl, GLU vglu, float vX, float vY, float vZ)
     {
+        xAngle = 0;  // This may need to change depending on where view begins from
+        yAngle = 180;
+        zAngle = 90;
         X = vX;
         Y = vY;
         Z = vZ;

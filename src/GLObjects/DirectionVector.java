@@ -68,33 +68,28 @@ public final class DirectionVector {
         plotPosition.z = vPlotPosition.z;
 
         vTarget = cgVecSub(plotPosition, position);
-        //PVector.sub(plotPosition, position);
         projectedTarget = vTarget;
 
         if ((Math.abs(vTarget.x) < 0.00001) && (Math.abs(vTarget.z) < 0.00001))
         {
             projectedTarget.x = 0;
             projectedTarget.normalize();
-            nRight.x = 1.0f;
-            nRight.y = 0f;
-            nRight.z = 0f;
-            PVector temp = new PVector();
+            nRight.x = 1.0f;  nRight.y = 0f;  nRight.z = 0f;
             nUp = cgCrossProduct(projectedTarget, nRight);
-            //nUp = temp.cross(projectedTarget, nRight);
             nTarget = vTarget;
-
-            nRight = PVector.mult(temp.cross(nTarget, nUp), -1);
+            PVector x = new PVector();
+            x = cgCrossProduct(nTarget, nUp);
+            nRight = cgVecScalarMult(x, -1);
         } else
         {
             projectedTarget.y = 0f;
             projectedTarget.normalize();
-            nUp.x = 0f;
-            nUp.y = 1.0f;
-            nUp.z = 0f;
+            nUp.x = 0f;  nUp.y = 1.0f;  nUp.z = 0f;
             PVector temp = new PVector();
-            nRight = PVector.mult(temp.cross(projectedTarget, nUp), -1);
+            temp = cgCrossProduct(projectedTarget, nUp);
+            nRight = cgVecScalarMult(temp, -1);
             nTarget = vTarget;
-            nUp = temp.cross(nTarget, nRight);
+            nUp = cgCrossProduct(nTarget, nRight);
         }
         nTarget.normalize();
         nRight.normalize();
@@ -205,6 +200,17 @@ public final class DirectionVector {
     }
     //**************************************************************************
 
+    public PVector cgVecScalarMult(PVector v, float s)
+    {
+        PVector vVector = new PVector();
+        vVector.x = v.x * s;
+        vVector.y = v.y * s;
+        vVector.z = v.z * s;
+
+        return vVector;
+    }
+
+    //**************************************************************************
     public void GetViewPositionMatrix()
     {
         //transform4D.m00 = SRScan.Camera.Dir.Right.x;
@@ -255,5 +261,6 @@ public final class DirectionVector {
             speed = 0;
         }
     }
+
     //**************************************************************************
 }

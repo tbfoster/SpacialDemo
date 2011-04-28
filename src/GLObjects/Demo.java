@@ -126,7 +126,7 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         commands.movementTimer();
         universe.draw();
         hud.draw();
-        VScene.draw(gl);
+        //VScene.draw(gl);
     }
 
     //**************************************************************************
