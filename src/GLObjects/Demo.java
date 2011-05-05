@@ -111,7 +111,7 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         gl = drawable.getGL();
 
         //VScene = new V3dsScene(gl, "sponza.3ds");
-        VScene = new V3dsScene(gl, "test.3ds");
+        //VScene = new V3dsScene(gl, "test.3ds");
         //VScene = new V3dsScene(gl, "Beast.3ds");
     }
 

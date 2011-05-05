@@ -42,7 +42,7 @@ public class SpacialSphere extends SpacialObject {
         gl.glTexEnvf(gl.GL_TEXTURE_ENV, gl.GL_TEXTURE_ENV_MODE, gl.GL_DECAL);
         glu.gluQuadricNormals(quadric, GLU.GLU_SMOOTH);  // Create Smooth Normals (NEW)
         glu.gluQuadricTexture(quadric, true);            // Create Texture Coords (NEW)
-        glu.gluSphere(quadric, 3.5f, 32, 32);
+        glu.gluSphere(quadric, .2f, 32, 32);
 
         gl.glEndList();
     }
@@ -69,7 +69,7 @@ public class SpacialSphere extends SpacialObject {
         try
         {
             image = ImageIO.read(new File(vFilename));
-                    
+
         } catch (IOException ex)
         {
             System.out.println(ex.getMessage());

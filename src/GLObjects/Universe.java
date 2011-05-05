@@ -15,7 +15,6 @@ public class Universe {
     public static ArrayList objectList = new ArrayList();
     SpacialCube sCube, sCube2;
     SpacialPlane plane1, plane2;
-    JavaPackage package1, package2, package3;
 
 //**************************************************************************
     public void createObjects(GL gl, GLU glu)
@@ -31,47 +30,47 @@ public class Universe {
         sphere2.compile();
 
         sCube = new SpacialCube(gl, glu, -8, -1, -3);
-        objectList.add(sCube);
+        //objectList.add(sCube);
         sCube2 = new SpacialCube(gl, glu, 5, 3, -5);
         sCube2.xIncrease = .25f;
-        objectList.add(sCube2);
+        //objectList.add(sCube2);
         plane1 = new SpacialPlane(gl, glu, -2, -6, 0);
+        plane1.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/KAMEN.jpg");
         plane1.setColor(.7f, .8f, .2f);
         objectList.add(plane1);
         plane2 = new SpacialPlane(gl, glu, -2, 2, -8);
-        plane2.setColor(.3f, .4f, .6f);
+        plane2.setColor(1f, 1f, 0f);
         plane2.xAngle = 90;
         plane2.zIncrease = .13f;
-        //objectList.add(plane2);
+
+        SpacialJavaClass jc = new SpacialJavaClass(gl, glu, -1, 0, 0, "Demo.java", "/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Demo.java");
+        jc.viewFunction = true;
+        plane2.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/x01_st.jpg");
+        //plane2.image = jc.image;
+        
+        objectList.add(plane2);
         //objectList.add(sphere1);
         //objectList.add(sphere2);
 
-        addPackage(gl, glu, -1, 0, 0, "GLObjects", "/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects");
-        addPackage(gl, glu, -1, 3, 0, "mri", "/home/tbfoster/NetBeansProjects/SpacialDemo/src/mri");
-
-
-        //package2 = new JavaPackage(gl, glu, 0, 2, 0);
-        //p/ackage2.packageName = "package2";
-        //objectList.add(package2);
-        //package3 = new JavaPackage(gl, glu, 0, 3, 0);
-        //package3.packageName = "package3";
-        //objectList.add(package3);
-
-        /*
-
-        for (int i = 1; i < 1; i++)
+        
+        
+        
+        for (int i = 1; i < 5; i++)
         {
         SpacialSphere tSphere = new SpacialSphere(gl, glu, i, 0, 0);
+        //tSphere.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/KAMEN.jpg");
         tSphere.compile();
         objectList.add(tSphere);
         }
-        for (int i = 1; i < 1; i++)
+       
+        /*
+        for (int i = 1; i < 5; i++)
         {
         SpacialSphere tSphere = new SpacialSphere(gl, glu, 0, i, 0);
         tSphere.compile();
         objectList.add(tSphere);
         }
-        for (int i = 1; i < 1; i++)
+        for (int i = 1; i < 5; i++)
         {
         SpacialSphere tSphere = new SpacialSphere(gl, glu, 0, 0, i);
         tSphere.compile();
@@ -79,6 +78,7 @@ public class Universe {
         }
          * 
          */
+        
     }
     //**************************************************************************
 
@@ -112,21 +112,22 @@ public class Universe {
     }
     //**************************************************************************
 
-    public void addPackage(GL gl, GLU glu, float x, float y, float z, String packageName, String baseDirectory)
+    public void addJavaClasses(GL gl, GLU glu, float x, float y, float z, String packageName, String baseDirectory)
     {
         float xx = x;
-        objectList.add(new JavaPackage(gl, glu, x, y, z, packageName));
-        xx = xx - .5f;
+        int i = 0;
         try
         {
             List<File> fileList = Util.getFiles(baseDirectory);
             for (File file : fileList)
-        {
-            System.out.println(file);
-            file.getName();
-            objectList.add(new JavaFunctionPanel(gl, glu, xx, y, z, file.getName()));
-            xx = xx - .5f;
-        }
+            {
+                System.out.println(file);
+                file.getName();
+                SpacialJavaClass jc = new SpacialJavaClass(gl, glu, xx, y, z, file.getName(), file.getAbsolutePath());
+                if(i==0) jc.viewFunction = true;
+                objectList.add(jc);
+                xx = xx - .5f;
+            }
         } catch (FileNotFoundException ex)
         {
             Logger.getLogger(Universe.class.getName()).log(Level.SEVERE, null, ex);
