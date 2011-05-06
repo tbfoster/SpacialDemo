@@ -39,10 +39,11 @@ public class SpacialSphere extends SpacialObject {
         text.setTexParameteri(gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR);
         text.setTexParameterf(gl.GL_TEXTURE_WRAP_S, gl.GL_REPEAT);
         text.setTexParameterf(gl.GL_TEXTURE_WRAP_T, gl.GL_REPEAT);
+        text.disable();
         gl.glTexEnvf(gl.GL_TEXTURE_ENV, gl.GL_TEXTURE_ENV_MODE, gl.GL_DECAL);
         glu.gluQuadricNormals(quadric, GLU.GLU_SMOOTH);  // Create Smooth Normals (NEW)
         glu.gluQuadricTexture(quadric, true);            // Create Texture Coords (NEW)
-        glu.gluSphere(quadric, .2f, 32, 32);
+        glu.gluSphere(quadric, .02f, 32, 32);
 
         gl.glEndList();
     }

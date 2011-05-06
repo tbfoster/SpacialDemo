@@ -38,47 +38,49 @@ public class Universe {
         plane1.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/KAMEN.jpg");
         plane1.setColor(.7f, .8f, .2f);
         objectList.add(plane1);
-        plane2 = new SpacialPlane(gl, glu, -2, 2, -8);
+        plane2 = new SpacialPlane(gl, glu, -2, 5, 0);
+        plane2.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/NeHe.png");
         plane2.setColor(1f, 1f, 0f);
-        plane2.xAngle = 90;
-        plane2.zIncrease = .13f;
+        plane2.xAngle = 180;
+        //plane2.zAngle = 90;
+        //plane2.zIncrease = .13f;
 
-        SpacialJavaClass jc = new SpacialJavaClass(gl, glu, -1, 0, 0, "Demo.java", "/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Demo.java");
+        SpacialJavaClass jc = new SpacialJavaClass(gl, glu, 0, 0, 0, "Demo.java", "/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Demo.java");
+
+        jc.init();
         jc.viewFunction = true;
-        plane2.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/x01_st.jpg");
+        objectList.add(jc);
+
+
+        plane1.setTextureImage(jc.image);
+        //plane2.text = TextureIO.newTexture(image, false);
         //plane2.image = jc.image;
-        
+
         objectList.add(plane2);
         //objectList.add(sphere1);
         //objectList.add(sphere2);
 
-        
-        
-        
-        for (int i = 1; i < 5; i++)
+        for (int i = 1; i < 25; i++)
         {
-        SpacialSphere tSphere = new SpacialSphere(gl, glu, i, 0, 0);
-        //tSphere.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/KAMEN.jpg");
-        tSphere.compile();
-        objectList.add(tSphere);
+            SpacialSphere tSphere = new SpacialSphere(gl, glu, i, 0, 0);
+            tSphere.setColor(1f, 0, 0);
+            tSphere.compile();
+            objectList.add(tSphere);
         }
-       
-        /*
-        for (int i = 1; i < 5; i++)
+        for (int i = 1; i < 25; i++)
         {
-        SpacialSphere tSphere = new SpacialSphere(gl, glu, 0, i, 0);
-        tSphere.compile();
-        objectList.add(tSphere);
+            SpacialSphere tSphere = new SpacialSphere(gl, glu, 0, i, 0);
+            tSphere.setColor(0, 1f, 0);
+            tSphere.compile();
+            objectList.add(tSphere);
         }
-        for (int i = 1; i < 5; i++)
+        for (int i = 1; i < 25; i++)
         {
-        SpacialSphere tSphere = new SpacialSphere(gl, glu, 0, 0, i);
-        tSphere.compile();
-        objectList.add(tSphere);
+            SpacialSphere tSphere = new SpacialSphere(gl, glu, 0, 0, i);
+            tSphere.setColor(0, 0, 1f);
+            tSphere.compile();
+            objectList.add(tSphere);
         }
-         * 
-         */
-        
     }
     //**************************************************************************
 
@@ -124,7 +126,10 @@ public class Universe {
                 System.out.println(file);
                 file.getName();
                 SpacialJavaClass jc = new SpacialJavaClass(gl, glu, xx, y, z, file.getName(), file.getAbsolutePath());
-                if(i==0) jc.viewFunction = true;
+                if (i == 0)
+                {
+                    jc.viewFunction = true;
+                }
                 objectList.add(jc);
                 xx = xx - .5f;
             }

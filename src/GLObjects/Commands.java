@@ -24,10 +24,13 @@ public class Commands {
         {
             case KeyEvent.VK_HOME:
             case 'm':
-                CameraView.dirVector.setPosition(0f, 0f, -20f);
+                CameraView.dirVector.setPosition(0f, 0f, 20f);
+                PVector pv = new PVector(0, 0, 0);
+                CameraView.dirVector.setTarget(pv);
                 break;
             case '+':
                 CameraView.dirVector.increaseSpeed();
+                
                 break;
             case '-':
                 CameraView.dirVector.decreaseSpeed();

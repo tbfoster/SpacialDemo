@@ -13,7 +13,7 @@ public final class DirectionVector {
     public static PVector nTarget = new PVector();
     public static PVector plotPosition = new PVector();
     public float zoomFactor = 2f;
-    public float speed = 0.05f, max_speed = 5;
+    public float speed = 0.01f, max_speed = 5;
 
     //**************************************************************************
     public DirectionVector(float vX, float vY, float vZ)
