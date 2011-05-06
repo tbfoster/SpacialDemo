@@ -112,9 +112,9 @@ public class SpacialJavaClass extends SpacialObject {
 
             gl.glBegin(GL.GL_QUADS);
             gl.glTexCoord2f(0.0f,0.0f);   gl.glVertex3f(vX,  vY,  0);
-            gl.glTexCoord2f(1.0f,0.0f);   gl.glVertex3f(vX+width, vY,  0);
-            gl.glTexCoord2f(1.0f,1.0f);   gl.glVertex3f(vX+width, vY+height,  0);
-            gl.glTexCoord2f(0.0f,1.0f);   gl.glVertex3f(vX,  vY+height,  0);
+            gl.glTexCoord2f(1.0f,0.0f);   gl.glVertex3f(vX+height, vY,  0);
+            gl.glTexCoord2f(1.0f,1.0f);   gl.glVertex3f(vX+height, vY+width,  0);
+            gl.glTexCoord2f(0.0f,1.0f);   gl.glVertex3f(vX,  vY+width,  0);
             tempTexture.disable();
             vY = vY + height;
         }

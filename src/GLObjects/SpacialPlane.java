@@ -28,7 +28,7 @@ public class SpacialPlane extends SpacialObject {
         float size = 1;
         float vX = 0;  float vY = 0;
         float width = 1;
-        float height = 1;
+        float height = 2;
         gl.glPushMatrix();
 
         gl.glTranslatef(X, Y, Z);
@@ -46,15 +46,17 @@ public class SpacialPlane extends SpacialObject {
         text.enable();
 
         gl.glBegin(GL.GL_QUADS);
-        gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(vX,  vY,  0);
-        gl.glTexCoord2f(size, 0.0f); gl.glVertex3f(vX+width, vY,  0);
-        gl.glTexCoord2f(size, size); gl.glVertex3f(vX+width, vY+height,  0);
-        gl.glTexCoord2f(0.0f, size); gl.glVertex3f(vX,  vY+height,  0);
+        gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(vX+width,  vY,  0);
+        gl.glTexCoord2f(size, 0.0f); gl.glVertex3f(vX+width, vY+height,  0);
+        gl.glTexCoord2f(size, size); gl.glVertex3f(vX, vY+height,  0);
+        gl.glTexCoord2f(0.0f, size); gl.glVertex3f(vX,  vY,  0);
         
-        //gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(-size, -size,  0);
-        //gl.glTexCoord2f(size, 0.0f); gl.glVertex3f( size, -size,  0);
-        //gl.glTexCoord2f(size, size); gl.glVertex3f( size,  size,  0);
-        //gl.glTexCoord2f(0.0f, size); gl.glVertex3f(-size,  size,  0);
+
+        //gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(vX,  vY,  0);
+        //gl.glTexCoord2f(size, 0.0f); gl.glVertex3f(vX+width, vY,  0);
+        //gl.glTexCoord2f(size, size); gl.glVertex3f(vX+width, vY+height,  0);
+        //gl.glTexCoord2f(0.0f, size); gl.glVertex3f(vX,  vY+height,  0);
+
         text.disable();
         
         gl.glEnd();

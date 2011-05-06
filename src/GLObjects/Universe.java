@@ -38,10 +38,10 @@ public class Universe {
         plane1.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/KAMEN.jpg");
         plane1.setColor(.7f, .8f, .2f);
         objectList.add(plane1);
-        plane2 = new SpacialPlane(gl, glu, -2, 5, 0);
+        plane2 = new SpacialPlane(gl, glu, 0, 0, 0);
         plane2.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/NeHe.png");
         plane2.setColor(1f, 1f, 0f);
-        plane2.xAngle = 180;
+        //plane2.xAngle = 180;
         //plane2.zAngle = 90;
         //plane2.zIncrease = .13f;
 
@@ -49,7 +49,7 @@ public class Universe {
 
         jc.init();
         jc.viewFunction = true;
-        objectList.add(jc);
+        //objectList.add(jc);
 
 
         plane1.setTextureImage(jc.image);
