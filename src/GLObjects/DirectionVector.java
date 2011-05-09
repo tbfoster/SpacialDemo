@@ -6,21 +6,21 @@ import processing.core.PVector;
 public final class DirectionVector {
 
     public Matrix4d transform4D = new Matrix4d();
-    public static PVector direction = new PVector(1, 0, 0);
-    public static PVector position = new PVector();
-    public static PVector nRight = new PVector();
-    public static PVector nUp = new PVector();
-    public static PVector nTarget = new PVector();
-    public static PVector plotPosition = new PVector();
+    //public static PVector direction = new PVector(1, 0, 0);
+    public PVector nPosition = new PVector();
+    public PVector nRight = new PVector();
+    public PVector nUp = new PVector();
+    public PVector nTarget = new PVector();
+    public PVector plotPosition = new PVector();
     public float zoomFactor = 2f;
     public float speed = 0.01f, max_speed = 5;
 
     //**************************************************************************
     public DirectionVector(float vX, float vY, float vZ)
     {
-        position.x = vX;
-        position.y = vY;
-        position.z = vZ;
+        nPosition.x = vX;
+        nPosition.y = vY;
+        nPosition.z = vZ;
         resetNormals();
         resetTransformationMatrix();
     }
@@ -28,9 +28,9 @@ public final class DirectionVector {
 
     public void setPosition(float vX, float vY, float vZ)
     {
-        position.x = vX;
-        position.y = vY;
-        position.z = vZ;
+        nPosition.x = vX;
+        nPosition.y = vY;
+        nPosition.z = vZ;
         resetNormals();
         resetTransformationMatrix();
     }
@@ -38,17 +38,17 @@ public final class DirectionVector {
 
     public void resetNormals()
     {
-        nRight.x = 0;
-        nRight.y = 1;
+        nRight.x = 1;
+        nRight.y = 0;
         nRight.z = 0;
 
-        nUp.x = 1;
-        nUp.y = 0;
+        nUp.x = 0;
+        nUp.y = 1;
         nUp.z = 0;
 
         nTarget.x = 0;
         nTarget.y = 0;
-        nTarget.z = 1;
+        nTarget.z = -1;
     }
 
     //**************************************************************************
@@ -67,7 +67,7 @@ public final class DirectionVector {
         plotPosition.y = vPlotPosition.y;
         plotPosition.z = vPlotPosition.z;
 
-        vTarget = cgVecSub(plotPosition, position);
+        vTarget = cgVecSub(plotPosition, nPosition);
         projectedTarget = vTarget;
 
         if ((Math.abs(vTarget.x) < 0.00001) && (Math.abs(vTarget.z) < 0.00001))
@@ -120,7 +120,7 @@ public final class DirectionVector {
 
     public void strafe(float vAmount)
     {
-        position = PVector.add(position, PVector.mult(nRight, vAmount));
+        nPosition = PVector.add(nPosition, PVector.mult(nRight, vAmount));
     }
 
     //**************************************************************************
@@ -229,17 +229,17 @@ public final class DirectionVector {
 
     public void moveForward()
     {
-        position.x = position.x + (nTarget.x * speed);
-        position.y = position.y + (nTarget.y * speed);
-        position.z = position.z + (nTarget.z * speed);
+        nPosition.x = nPosition.x + (nTarget.x * speed);
+        nPosition.y = nPosition.y + (nTarget.y * speed);
+        nPosition.z = nPosition.z + (nTarget.z * speed);
     }
 
     //**************************************************************************
     public void moveBackward()
     {
-        position.x = position.x - (nTarget.x * speed);
-        position.y = position.y - (nTarget.y * speed);
-        position.z = position.z - (nTarget.z * speed);
+        nPosition.x = nPosition.x - (nTarget.x * speed);
+        nPosition.y = nPosition.y - (nTarget.y * speed);
+        nPosition.z = nPosition.z - (nTarget.z * speed);
     }
     //**************************************************************************
 

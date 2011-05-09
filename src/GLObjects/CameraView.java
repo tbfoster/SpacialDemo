@@ -3,26 +3,36 @@ package GLObjects;
 import javax.media.opengl.glu.GLU;
 import processing.core.PVector;
 
-
 public class CameraView 
 {
-    public static DirectionVector dirVector = new DirectionVector(0, 0, 0);
+    public DirectionVector dv = new DirectionVector(5, 1, 25f);
 
+    //**************************************************************************
+    public void init()
+    {
+        //dv.yaw(90f);
+    }
     //**************************************************************************
     public void draw(GLU glu)
     {
-        PVector look = new PVector();
-        look.x = DirectionVector.position.x - (DirectionVector.nTarget.x * dirVector.zoomFactor);
-        look.y = DirectionVector.position.y - (DirectionVector.nTarget.y * dirVector.zoomFactor);
-        look.z = DirectionVector.position.z - (DirectionVector.nTarget.z * dirVector.zoomFactor);
+        PVector eye = new PVector();
+        eye.x = dv.nPosition.x - (dv.nTarget.x * dv.zoomFactor);
+        eye.y = dv.nPosition.y - (dv.nTarget.y * dv.zoomFactor);
+        eye.z = dv.nPosition.z - (dv.nTarget.z * dv.zoomFactor);
         PVector center = new PVector();
-        center.x = DirectionVector.position.x + DirectionVector.nTarget.x;
-        center.y = DirectionVector.position.y + DirectionVector.nTarget.y;
-        center.z = DirectionVector.position.z + DirectionVector.nTarget.z;
+        center.x = dv.nPosition.x + dv.nTarget.x;
+        center.y = dv.nPosition.y + dv.nTarget.y;
+        center.z = dv.nPosition.z + dv.nTarget.z;
 
-        glu.gluLookAt(look.x, look.y, look.z,
+        glu.gluLookAt(dv.nPosition.x, dv.nPosition.y, dv.nPosition.z,
                 center.x, center.y, center.z,
-                DirectionVector.nUp.x, DirectionVector.nUp.y, DirectionVector.nUp.z);
+                dv.nUp.x, dv.nUp.y, dv.nUp.z);
+        
+        //glu.gluLookAt(DirectionVector.nPosition.x, DirectionVector.nPosition.y, DirectionVector.nPosition.z,
+        //glu.gluLookAt(1, 1, 25f,
+          //      0, 0, 0,
+          //      0, 1, 0);
+        
     }
     //**************************************************************************
 }

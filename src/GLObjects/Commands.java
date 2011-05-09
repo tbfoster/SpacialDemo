@@ -24,16 +24,16 @@ public class Commands {
         {
             case KeyEvent.VK_HOME:
             case 'm':
-                CameraView.dirVector.setPosition(0f, 0f, 20f);
-                PVector pv = new PVector(0, 0, 0);
-                CameraView.dirVector.setTarget(pv);
+                //Demo.CameraView.dv.setPosition(0f, 0f, 20f);
+                //PVector pv = new PVector(0, 0, 0);
+                //CameraView.dirVector.setTarget(pv);
                 break;
             case '+':
-                CameraView.dirVector.increaseSpeed();
+                //CameraView.dirVector.increaseSpeed();
                 
                 break;
             case '-':
-                CameraView.dirVector.decreaseSpeed();
+                //CameraView.dirVector.decreaseSpeed();
                 break;
             case 'a':
             case 'A':
@@ -61,13 +61,13 @@ public class Commands {
                 commandForwardCount++;
                 if (commandForwardCount > 2)
                 {
-                    CameraView.dirVector.increaseSpeed();
+                    Globals.camera.dv.increaseSpeed();
                     commandForwardCount = 0;
                 }
                 break;
             }
             case 't':
-                CameraView.dirVector.setTarget(new PVector(-3f, -2f, 3f));
+                Globals.camera.dv.setTarget(new PVector(-3f, -2f, 3f));
                 break;
         }
     }
@@ -112,19 +112,19 @@ public class Commands {
     {
         if (commandForward)
         {
-            CameraView.dirVector.moveForward();
+            Globals.camera.dv.moveForward();
         }
         if (commandBackward)
         {
-            CameraView.dirVector.moveBackward();
+            Globals.camera.dv.moveBackward();
         }
         if (commandLeft)
         {
-            CameraView.dirVector.strafe(-Globals.movementSensitivity);
+            Globals.camera.dv.strafe(-Globals.movementSensitivity);
         }
         if (commandRight)
         {
-            CameraView.dirVector.strafe(Globals.movementSensitivity);
+            Globals.camera.dv.strafe(Globals.movementSensitivity);
         }
     }
     //**************************************************************************
@@ -157,19 +157,19 @@ public class Commands {
 
         if (x > prevMouseX)
         {
-            CameraView.dirVector.yaw(-Globals.mouseSensitivity);
+            Globals.camera.dv.yaw(-Globals.mouseSensitivity);
         }
         if (x < prevMouseX)
         {
-            CameraView.dirVector.yaw(Globals.mouseSensitivity);
+            Globals.camera.dv.yaw(Globals.mouseSensitivity);
         }
         if (y > prevMouseY)
         {
-            CameraView.dirVector.pitch(-Globals.mouseSensitivity);
+            Globals.camera.dv.pitch(-Globals.mouseSensitivity);
         }
         if (y < prevMouseY)
         {
-            CameraView.dirVector.pitch(Globals.mouseSensitivity);
+            Globals.camera.dv.pitch(Globals.mouseSensitivity);
         }
         prevMouseX = x;
         prevMouseY = y;

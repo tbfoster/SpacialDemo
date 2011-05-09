@@ -14,7 +14,7 @@ public class Universe {
 
     public static ArrayList objectList = new ArrayList();
     SpacialCube sCube, sCube2;
-    SpacialPlane plane1, plane2;
+    SpacialPlane plane1, plane2, plane3;
 
 //**************************************************************************
     public void createObjects(GL gl, GLU glu)
@@ -44,6 +44,7 @@ public class Universe {
         //plane2.xAngle = 180;
         //plane2.zAngle = 90;
         //plane2.zIncrease = .13f;
+        
 
         SpacialJavaClass jc = new SpacialJavaClass(gl, glu, 0, 0, 0, "Demo.java", "/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Demo.java");
 

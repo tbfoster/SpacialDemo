@@ -1,28 +1,31 @@
 package GLObjects;
 
 import java.text.DecimalFormat;
+import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
+import javax.media.opengl.glu.GLU;
 
 public class HeadsUpDisplay {
 
-    public static GLAutoDrawable drawable;
-    private DecimalFormat format = new DecimalFormat("###");
+    public static GL gl;
+    public static GLU glu;
+    public static SpacialSphere plane3;
 
-    public static void HeadsUpDisplay()
-    {
-    }
     //**************************************************************************
-
-    public HeadsUpDisplay(GLAutoDrawable vDrawable)
+    HeadsUpDisplay(GL vgl, GLU vglu)
     {
-
-        drawable = vDrawable;
+         gl = vgl;
+        glu = vglu;
+        plane3 = new SpacialSphere(gl, glu, 1, 1, 0);
+        plane3.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/NeHe.png");
+        plane3.compile();
+        plane3.setColor(1f, 1f, 0f);
     }
 
     //**************************************************************************
     public void draw()
     {
-        //drawDebug();
+         plane3.draw();
     }
     //**************************************************************************
 

@@ -22,23 +22,25 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
 
     public static GL gl;
     public static GLU glu;
+    public static GLUT glut;
     public static boolean debuggingOn = false;
     private V3dsScene VScene;
-    CameraView camera;
+    
     Universe universe;
     HeadsUpDisplay hud;
     Commands commands;
+    cgFonts fonts;
 
     //**************************************************************************
     public static void main(String[] args)
     {
-        Frame frame = new Frame("Text Cube");
+        Frame frame = new Frame("Spacial Demo");
         frame.setLayout(new BorderLayout());
         GLCanvas canvas = new GLCanvas();
         final Demo demo = new Demo();
         canvas.addGLEventListener(demo);
         frame.add(canvas, BorderLayout.CENTER);
-        frame.setSize(1024, 768);
+        frame.setSize(Globals.frameWidth, Globals.frameHeight);
         final Animator animator = new Animator(canvas);
 
         //**********************************************************************
@@ -92,18 +94,22 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
     {
         Globals.renderer = new TextRenderer(new Font("SansSerif", Font.PLAIN, 18));
         glu = new GLU();
+        glut = new GLUT();
         gl = drawable.getGL();
         gl.glEnable(GL.GL_DEPTH_TEST);
-        camera = new CameraView();
+        Globals.camera = new CameraView();
+        Globals.camera.init();
+        Globals.hudCamera = new CameraView();
 
         Rectangle2D bounds = Globals.renderer.getBounds("Bottom");
         float w = (float) bounds.getWidth();
         float h = (float) bounds.getHeight();
         Globals.textScaleFactor = 1.0f / (w * 1.1f);
         universe = new Universe();
-        hud = new HeadsUpDisplay(drawable);
+        hud = new HeadsUpDisplay(gl, glu);
         commands = new Commands();
         universe.createObjects(gl, glu);
+        fonts = new cgFonts(glut);
         gl.setSwapInterval(0);
         drawable.addMouseListener(this);
         drawable.addMouseMotionListener(this);
@@ -120,13 +126,31 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
     public void display(GLAutoDrawable drawable)
     {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+        gl.glPushMatrix();
+        
+        gl.glViewport(0, Globals.hudHeight, Globals.frameWidth, Globals.frameHeight - Globals.hudHeight);
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
-        camera.draw(glu);
+        
+        Globals.camera.draw(glu);
         commands.movementTimer();
         universe.draw();
-        hud.draw();
+        gl.glScalef(0.005f, 0.005f, 0.0f);
+        gl.glColor3f(1f, 1f, 1f);
+        fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, "testdddddddddddddddddddddddddddddddddddddddddddddddddddd");
+
+        gl.glPopMatrix();
         //VScene.draw(gl);
+        gl.glViewport(0, 0, Globals.frameWidth, Globals.hudHeight);
+        gl.glMatrixMode(GL.GL_MODELVIEW);
+        gl.glLoadIdentity();
+        //gl.glScalef (1, 1, -1);  // CHange to left handed coordinate system
+        Globals.hudCamera.draw(glu);
+        gl.glOrtho(0, Globals.frameWidth, 0, Globals.hudHeight, 0, 0);
+        gl.glScalef(0.05f, 0.05f, 0.0f);
+        gl.glColor3f(1f, 1f, 1f);
+        fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, "ORTHO");
+        hud.draw();
     }
 
     //**************************************************************************
