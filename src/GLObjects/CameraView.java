@@ -8,11 +8,6 @@ public class CameraView
     public DirectionVector dv = new DirectionVector(5, 1, 25f);
 
     //**************************************************************************
-    public void init()
-    {
-        //dv.yaw(90f);
-    }
-    //**************************************************************************
     public void draw(GLU glu)
     {
         PVector eye = new PVector();
@@ -27,12 +22,6 @@ public class CameraView
         glu.gluLookAt(dv.nPosition.x, dv.nPosition.y, dv.nPosition.z,
                 center.x, center.y, center.z,
                 dv.nUp.x, dv.nUp.y, dv.nUp.z);
-        
-        //glu.gluLookAt(DirectionVector.nPosition.x, DirectionVector.nPosition.y, DirectionVector.nPosition.z,
-        //glu.gluLookAt(1, 1, 25f,
-          //      0, 0, 0,
-          //      0, 1, 0);
-        
     }
     //**************************************************************************
 }

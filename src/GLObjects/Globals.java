@@ -16,8 +16,8 @@ public class Globals {
     public static Timer timerObjectInterval1 = new Timer();
     public static Timer timerObjectInterval2 = new Timer();
     public static int genListIndex = 1;
-    public static int frameWidth = 1024;
-    public static int frameHeight = 768;
+    public static int frameWidth = 1680;
+    public static int frameHeight = 1050;
     public static int hudHeight = 200;
     public static CameraView camera;
     public static CameraView hudCamera;

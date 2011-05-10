@@ -98,7 +98,6 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         gl = drawable.getGL();
         gl.glEnable(GL.GL_DEPTH_TEST);
         Globals.camera = new CameraView();
-        Globals.camera.init();
         Globals.hudCamera = new CameraView();
 
         Rectangle2D bounds = Globals.renderer.getBounds("Bottom");
@@ -106,7 +105,7 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         float h = (float) bounds.getHeight();
         Globals.textScaleFactor = 1.0f / (w * 1.1f);
         universe = new Universe();
-        hud = new HeadsUpDisplay(gl, glu);
+        hud = new HeadsUpDisplay(gl, glu, glut);
         commands = new Commands();
         universe.createObjects(gl, glu);
         fonts = new cgFonts(glut);
@@ -135,21 +134,20 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         Globals.camera.draw(glu);
         commands.movementTimer();
         universe.draw();
-        gl.glScalef(0.005f, 0.005f, 0.0f);
-        gl.glColor3f(1f, 1f, 1f);
-        fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, "testdddddddddddddddddddddddddddddddddddddddddddddddddddd");
-
+        fonts.setScale(0.005f, 0.005f, 0.0f);
+        fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, 2, 2, 0, "testdddddddddddddddddddddddddddddddddddddddddddddddddddd");
         gl.glPopMatrix();
+        
         //VScene.draw(gl);
         gl.glViewport(0, 0, Globals.frameWidth, Globals.hudHeight);
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
-        //gl.glScalef (1, 1, -1);  // CHange to left handed coordinate system
+        
         Globals.hudCamera.draw(glu);
         gl.glOrtho(0, Globals.frameWidth, 0, Globals.hudHeight, 0, 0);
-        gl.glScalef(0.05f, 0.05f, 0.0f);
+        fonts.setScale(0.05f, 0.05f, 0.0f);
         gl.glColor3f(1f, 1f, 1f);
-        fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, "ORTHO");
+        fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, -8, 0, 0, "ORTHO");
         hud.draw();
     }
 
