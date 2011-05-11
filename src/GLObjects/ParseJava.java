@@ -24,6 +24,8 @@ public class ParseJava {
     //**************************************************************************
     public void parseFile(String parseFileName)
     {
+        methodIndex = 0;
+        methodMax = 0;
         JavaDocBuilder builder = new JavaDocBuilder();
         try
         {

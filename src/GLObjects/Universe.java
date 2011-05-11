@@ -48,11 +48,21 @@ public class Universe {
 
         ParseJava parser = new ParseJava();
         parser.parseFile("/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Demo.java");
-        SpacialJavaMethod jc;
         int x = 0;
         while(parser.moreMethods())
         {
-            jc = new SpacialJavaMethod(gl, glu, glut, x, 0, 0, parser.getNextMethodBlock());
+            SpacialJavaMethod jc = new SpacialJavaMethod(gl, glu, glut, x, 0, 0, parser.getNextMethodBlock());
+            jc.compile();
+            jc.viewFunction = true;
+            objectList.add(jc);
+            x = x + 60;
+        }
+        
+        parser.parseFile("/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Universe.java");
+        x = 0;
+        while(parser.moreMethods())
+        {
+            SpacialJavaMethod jc = new SpacialJavaMethod(gl, glu, glut, x, 5, -5, parser.getNextMethodBlock());
             jc.compile();
             jc.viewFunction = true;
             objectList.add(jc);

@@ -23,9 +23,10 @@ public class HeadsUpDisplay {
     public void draw()
     {
         gl.glPushMatrix();
-        fonts.setScale(0.05f, 0.05f, 0.0f);
+        fonts.setScale(0.015f, 0.015f, 0.0f);
         gl.glColor3f(1f, 1f, 1f);
-        fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, -8, 0, 0, "ORTHO");
+        String temp = new Integer(Globals.FPS).toString();
+        fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, -18, 0, 0, temp);
         gl.glPopMatrix();
     }
     //**************************************************************************

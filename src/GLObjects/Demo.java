@@ -2,14 +2,11 @@ package GLObjects;
 
 import mri.v3ds.V3dsScene;
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.*;
-import java.awt.geom.*;
 import javax.media.opengl.*;
 import javax.media.opengl.glu.*;
 import com.sun.opengl.util.*;
-import com.sun.opengl.util.j2d.*;
 import java.awt.Dimension;
 import java.util.TimerTask;
 import javax.swing.JFrame;
@@ -25,11 +22,11 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
     public static GLUT glut;
     public static boolean debuggingOn = false;
     private V3dsScene VScene;
-    
     Universe universe;
     HeadsUpDisplay hud;
     Commands commands;
     cgFonts fonts;
+    boolean OffOn = true;
 
     //**************************************************************************
     public static void main(String[] args)
@@ -58,8 +55,10 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
             @Override
             public void run()
             {
+                Globals.FPS = Globals.fpsCount;
+                Globals.fpsCount = 0;
             }
-        }, Globals.delay, Globals.period);
+        }, Globals.delay, 1000);
         //**********************************************************************
 
 
@@ -120,46 +119,45 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
     @Override
     public void display(GLAutoDrawable drawable)
     {
-        gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-        gl.glPushMatrix();
+        gl.glPushAttrib(gl.GL_CURRENT_BIT);
         
         gl.glViewport(0, Globals.hudHeight, Globals.frameWidth, Globals.frameHeight - Globals.hudHeight);
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
-        
         Globals.camera.draw(glu);
         commands.movementTimer();
-        
         fonts.setScale(0.005f, 0.005f, 0.0f);
         fonts.setColor(1, 0, 0);
         fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, 2, 2, 0, "testdddddddddddddddddddddddddddddddddddddddddddddddddddd");
         universe.draw();
-        gl.glPopMatrix();
-        
-        //gl.glPushAttrib(gl.GL_CURRENT_BIT);
-        //VScene.draw(gl);
+        gl.glPopAttrib();
+              
+
+        gl.glColor3f(1, 1, 1);
         gl.glViewport(0, 0, Globals.frameWidth, Globals.hudHeight);
-        gl.glMatrixMode (gl.GL_MODELVIEW);
-        //gl.glMatrixMode(GL.GL_PROJECTION);
+        //gl.glMatrixMode (gl.GL_PROJECTION);
         gl.glLoadIdentity();
         gl.glOrtho(0, Globals.frameWidth, 0, Globals.hudHeight, 0, 0);
-        //gl.glMatrixMode (gl.GL_MODELVIEW);
-	//gl.glLoadIdentity ();	
-	//gl.glClear (gl.GL_DEPTH_BUFFER_BIT);	
         
-        gl.glBegin(gl.GL_QUADS);							// Begin Drawing A Single Quad
-				// We Fill The Entire 1/4 Section With A Single Textured Quad.
-				gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex2i(500, 0              );
-				gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex2i(0,              0              );
-				gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex2i(0,              500);
-				gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex2i(500, 500);
-	gl.glEnd();		
-        //Globals.hudCamera.draw(glu);
-        //fonts.setScale(0.05f, 0.05f, 0.0f);
-        //fonts.setColor(0, 1, 0);
-        //fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, 0, 0, 0, "ORTHO");
-        //hud.draw();
-        //gl.glPopAttrib();
+        //gl.glMatrixMode(GL.GL_PROJECTION);
+        //gl.glLoadIdentity();
+        
+        //gl.glMatrixMode (gl.GL_MODELVIEW);
+        //gl.glLoadIdentity();	
+
+        //gl.glBegin(gl.GL_QUADS);							
+        //    gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex2i(500, 0              );
+        //    gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex2i(0,              0              );
+        //    gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex2i(0,              500);
+        //    gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex2i(500, 500);
+        //gl.glEnd();		
+
+        Globals.hudCamera.draw(glu);
+        hud.draw();
+        gl.glPopAttrib();
+        Globals.fpsCount++;
+
         gl.glFlush();
     }
 
