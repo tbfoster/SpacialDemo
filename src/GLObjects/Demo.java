@@ -29,7 +29,7 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
     Universe universe;
     HeadsUpDisplay hud;
     Commands commands;
-    cgFonts fonts;
+    public cgFonts fonts;
 
     //**************************************************************************
     public static void main(String[] args)
@@ -107,7 +107,7 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         universe = new Universe();
         hud = new HeadsUpDisplay(gl, glu, glut);
         commands = new Commands();
-        universe.createObjects(gl, glu);
+        universe.createObjects(gl, glu, glut);
         fonts = new cgFonts(glut);
         gl.setSwapInterval(0);
         drawable.addMouseListener(this);
@@ -133,9 +133,11 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         
         Globals.camera.draw(glu);
         commands.movementTimer();
-        universe.draw();
+        
         fonts.setScale(0.005f, 0.005f, 0.0f);
+        fonts.setColor(1, 0, 0);
         fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, 2, 2, 0, "testdddddddddddddddddddddddddddddddddddddddddddddddddddd");
+        universe.draw();
         gl.glPopMatrix();
         
         //VScene.draw(gl);
@@ -146,7 +148,7 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         Globals.hudCamera.draw(glu);
         gl.glOrtho(0, Globals.frameWidth, 0, Globals.hudHeight, 0, 0);
         fonts.setScale(0.05f, 0.05f, 0.0f);
-        gl.glColor3f(1f, 1f, 1f);
+        fonts.setColor(0, 1, 0);
         fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, -8, 0, 0, "ORTHO");
         hud.draw();
     }

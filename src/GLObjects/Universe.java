@@ -1,5 +1,6 @@
 package GLObjects;
 
+import com.sun.opengl.util.GLUT;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class Universe {
     SpacialPlane plane1, plane2, plane3;
 
 //**************************************************************************
-    public void createObjects(GL gl, GLU glu)
+    public void createObjects(GL gl, GLU glu, GLUT glut)
     {
         SpacialSphere sphere1 = new SpacialSphere(gl, glu, 3, 2, 3);
         sphere1.xIncrease = .13f;
@@ -30,10 +31,10 @@ public class Universe {
         sphere2.compile();
 
         sCube = new SpacialCube(gl, glu, -8, -1, -3);
-        //objectList.add(sCube);
+        objectList.add(sCube);
         sCube2 = new SpacialCube(gl, glu, 5, 3, -5);
         sCube2.xIncrease = .25f;
-        //objectList.add(sCube2);
+        objectList.add(sCube2);
         plane1 = new SpacialPlane(gl, glu, -2, -6, 0);
         plane1.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/KAMEN.jpg");
         plane1.setColor(.7f, .8f, .2f);
@@ -41,25 +42,13 @@ public class Universe {
         plane2 = new SpacialPlane(gl, glu, 0, 0, 0);
         plane2.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/NeHe.png");
         plane2.setColor(1f, 1f, 0f);
-        //plane2.xAngle = 180;
-        //plane2.zAngle = 90;
-        //plane2.zIncrease = .13f;
-        
+        objectList.add(plane2);
 
-        SpacialJavaClass jc = new SpacialJavaClass(gl, glu, 0, 0, 0, "Demo.java", "/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Demo.java");
-
+        SpacialJavaClass jc = new SpacialJavaClass(gl, glu, glut, 0, 5, 0, "Demo.java", "/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Demo.java");
+        jc.compile();
         jc.init();
         jc.viewFunction = true;
-        //objectList.add(jc);
-
-
-        plane1.setTextureImage(jc.image);
-        //plane2.text = TextureIO.newTexture(image, false);
-        //plane2.image = jc.image;
-
-        objectList.add(plane2);
-        //objectList.add(sphere1);
-        //objectList.add(sphere2);
+        objectList.add(jc);
 
         for (int i = 1; i < 25; i++)
         {
@@ -115,7 +104,7 @@ public class Universe {
     }
     //**************************************************************************
 
-    public void addJavaClasses(GL gl, GLU glu, float x, float y, float z, String packageName, String baseDirectory)
+    public void addJavaClasses(GL gl, GLU glu, GLUT glut, float x, float y, float z, String packageName, String baseDirectory)
     {
         float xx = x;
         int i = 0;
@@ -126,7 +115,7 @@ public class Universe {
             {
                 System.out.println(file);
                 file.getName();
-                SpacialJavaClass jc = new SpacialJavaClass(gl, glu, xx, y, z, file.getName(), file.getAbsolutePath());
+                SpacialJavaClass jc = new SpacialJavaClass(gl, glu, glut, xx, y, z, file.getName(), file.getAbsolutePath());
                 if (i == 0)
                 {
                     jc.viewFunction = true;

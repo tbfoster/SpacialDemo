@@ -50,18 +50,10 @@ public class SpacialPlane extends SpacialObject {
         gl.glTexCoord2f(size, 0.0f); gl.glVertex3f(vX+width, vY+height,  0);
         gl.glTexCoord2f(size, size); gl.glVertex3f(vX, vY+height,  0);
         gl.glTexCoord2f(0.0f, size); gl.glVertex3f(vX,  vY,  0);
-        
-
-        //gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(vX,  vY,  0);
-        //gl.glTexCoord2f(size, 0.0f); gl.glVertex3f(vX+width, vY,  0);
-        //gl.glTexCoord2f(size, size); gl.glVertex3f(vX+width, vY+height,  0);
-        //gl.glTexCoord2f(0.0f, size); gl.glVertex3f(vX,  vY+height,  0);
-
-        text.disable();
-        
         gl.glEnd();
-        gl.glPopMatrix();
+        text.disable();
 
+        gl.glPopMatrix();
     }
 
     //**************************************************************************

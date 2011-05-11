@@ -1,11 +1,11 @@
 package GLObjects;
 
-import javax.vecmath.Matrix4d;
+//import javax.vecmath.Matrix4d;
 import processing.core.PVector;
 
 public final class DirectionVector {
 
-    public Matrix4d transform4D = new Matrix4d();
+    //public Matrix4d transform4D = new Matrix4d();
     public PVector nPosition = new PVector();
     public PVector nRight = new PVector();
     public PVector nUp = new PVector();
@@ -53,7 +53,7 @@ public final class DirectionVector {
     //**************************************************************************
     public void resetTransformationMatrix()
     {
-        transform4D.setIdentity();
+       // transform4D.setIdentity();
     }
 
     //**************************************************************************

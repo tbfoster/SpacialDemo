@@ -1,6 +1,7 @@
 // **** Latest
 package GLObjects;
 
+import com.sun.opengl.util.GLUT;
 import javax.media.opengl.GL;
 import javax.media.opengl.glu.GLU;
 
@@ -17,6 +18,7 @@ public class SpacialObject {
     public float B;
     public static GL gl;
     public static GLU glu;
+    public static GLUT glut;
     int genListID;
 
     //**************************************************************************

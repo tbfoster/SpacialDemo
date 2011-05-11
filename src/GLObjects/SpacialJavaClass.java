@@ -1,5 +1,6 @@
 package GLObjects;
 
+import com.sun.opengl.util.GLUT;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -14,17 +15,14 @@ import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.media.opengl.GL;
 import javax.media.opengl.glu.GLU;
+import java.util.Scanner;
 
 public class SpacialJavaClass extends SpacialObject {
 
@@ -35,23 +33,31 @@ public class SpacialJavaClass extends SpacialObject {
     public JavaPackage javaPackage;
     public JavaClass[] javaClasses;
     public JavaMethod[] javaMethods;
+    public String displaySource;
     public boolean viewFunction = false;
     public static ArrayList textureList = new ArrayList();
     //public Texture[] textures = new Texture[1];
     public Texture textures1, textures2, textures3;
     BufferedImage image;
+    public float scaleX = 1.0f;
+    public float scaleY = 1.0f;
+    public float scaleZ = 1.0f;
+    cgFonts fonts;
 
     //**************************************************************************
     public SpacialJavaClass(GL vgl, GLU vglu, float vX, float vY, float vZ)
     {
         super(vgl, vglu, vX, vY, vZ);
+        
         //LoadGLTextures();
     }
     //**************************************************************************
 
-    public SpacialJavaClass(GL vgl, GLU vglu, float vX, float vY, float vZ, String vName, String filePath)
+    public SpacialJavaClass(GL vgl, GLU vglu, GLUT vglut, float vX, float vY, float vZ, String vName, String filePath)
     {
         super(vgl, vglu, vX, vY, vZ);
+        glut = vglut;
+        fonts = new cgFonts(glut);
         className = vName;
         parseFileName = filePath;
 
@@ -66,20 +72,17 @@ public class SpacialJavaClass extends SpacialObject {
     @Override
     public void compile()
     {
-        float faceSize = 04f;
-        float halfFaceSize = faceSize / 2;
-
+        float y = -1f;
         genListID = gl.glGenLists(Globals.genListIndex);
         gl.glNewList(genListID, gl.GL_COMPILE);
+        fonts.setColor(0, 1.0f, 0);
+        Scanner in = new Scanner(displaySource);
+        while (in.hasNext())
+        {
+            fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, 1, y, 0, in.nextLine());
+            y = y - 1;
+        }
 
-        gl.glColor3f(R, G, B);
-        Globals.renderer.begin3DRendering();
-        gl.glDisable(GL.GL_DEPTH_TEST);
-        Globals.renderer.draw3D(className, 0, 0, 0, Globals.textScaleFactor);
-        Globals.renderer.end3DRendering();
-        Globals.renderer.begin3DRendering();
-        Globals.renderer.draw3D("TEST", 5, 5, 5, Globals.textScaleFactor);
-        Globals.renderer.end3DRendering();
 
         gl.glEndList();
     }
@@ -88,41 +91,23 @@ public class SpacialJavaClass extends SpacialObject {
     @Override
     public void draw()
     {
-        float size = 3;
-        float vX=0f, vY=0f, vZ=0f;
-        float width=8, height = 6;
-        gl.glPushMatrix();
-
-        gl.glTranslatef(X, Y, Z);
-        gl.glColor3f(R, G, B);
-        rotateX();
-        rotateY();
-        rotateZ();
-
-        for (int index = 0; index < textureList.size(); index++)
-        {
-            Texture tempTexture = (Texture) textureList.get(index);
-
-            tempTexture.setTexParameteri(gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR);
-            tempTexture.setTexParameteri(gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR);
-            tempTexture.setTexParameterf(gl.GL_TEXTURE_WRAP_S, gl.GL_CLAMP);
-            tempTexture.setTexParameterf(gl.GL_TEXTURE_WRAP_T, gl.GL_CLAMP);
-            gl.glTexEnvf(gl.GL_TEXTURE_ENV, gl.GL_TEXTURE_ENV_MODE, gl.GL_DECAL);
-            tempTexture.enable();
-
-            gl.glBegin(GL.GL_QUADS);
-            gl.glTexCoord2f(0.0f,0.0f);   gl.glVertex3f(vX,  vY,  0);
-            gl.glTexCoord2f(1.0f,0.0f);   gl.glVertex3f(vX+height, vY,  0);
-            gl.glTexCoord2f(1.0f,1.0f);   gl.glVertex3f(vX+height, vY+width,  0);
-            gl.glTexCoord2f(0.0f,1.0f);   gl.glVertex3f(vX,  vY+width,  0);
-            tempTexture.disable();
-            vY = vY + height;
-        }
-
-        gl.glEnd();
-        gl.glPopMatrix();
-
+        gl.glCallList(genListID);
     }
+    public void draw2()
+    {
+        float y = -1f;
+        
+        gl.glPushMatrix();
+        fonts.setColor(0, 1.0f, 0);
+        Scanner in = new Scanner(displaySource);
+        while (in.hasNext())
+        {
+            fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, 1, y, 0, in.nextLine());
+            y = y - 1;
+        }
+        gl.glPopMatrix();
+    }
+
     //**************************************************************************    
 
     public void parseFile()
@@ -152,6 +137,8 @@ public class SpacialJavaClass extends SpacialObject {
         //  "com.custom.CustomInterface"}
         JavaField nameField = cls.getFields()[0];
         JavaMethod doStuff[] = cls.getMethods();
+        displaySource = doStuff[1].getCodeBlock();
+
         System.out.println("completed");
         textToImage(doStuff[1].getCodeBlock());
         System.out.println("completed");
@@ -188,7 +175,7 @@ public class SpacialJavaClass extends SpacialObject {
         tempTexture = TextureIO.newTexture(img, false);
         textureList.add(tempTexture);
 
-        img = textToImage("public void main(int hexaware);");
+        img = textToImage("this is line two of the source code");
         tempTexture = TextureIO.newTexture(img, false);
         textureList.add(tempTexture);
 
