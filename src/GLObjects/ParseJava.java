@@ -2,31 +2,79 @@ package GLObjects;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
+import com.thoughtworks.qdox.model.JavaField;
+import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaPackage;
 import com.thoughtworks.qdox.model.JavaSource;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ParseJava {
-   
+
+    public JavaSource[] javaSource;
+    public JavaPackage javaPackage;
+    public JavaClass[] javaClasses;
+    public JavaMethod[] javaMethods;
+    public String methodBlock;
+    private int methodIndex = 0;
+    private int methodMax = 0;
 
     //**************************************************************************
-    public void parseFile(String filename, SpacialJavaClass jc) throws FileNotFoundException
+    public void parseFile(String parseFileName)
     {
         JavaDocBuilder builder = new JavaDocBuilder();
-        builder.addSource(new FileReader(filename));
+        try
+        {
+            builder.addSource(new FileReader(parseFileName));
+        } catch (FileNotFoundException ex)
+        {
+            Logger.getLogger(SpacialJavaMethod.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        jc.javaSource = builder.getSources();
-        
-        JavaSource[] src = builder.getSources();
-        JavaPackage pkg = src[0].getPackage();
-        System.out.println(pkg.getName());
+        JavaClass cls = builder.getClassByName("GLObjects.Demo");
 
-        JavaClass[] classes  = pkg.getClasses();
-        String name = pkg.getName();
-        String toString = pkg.toString();
-        JavaPackage parent = pkg.getParentPackage();
+        //String pkg      = cls.getPackage();            // "com.blah.foo"
+        String name = cls.getName();                     // "MyClass"
+        String fullName = cls.getFullyQualifiedName();   // "com.blah.foo.MyClass";
+        boolean isInterface = cls.isInterface();
 
+        boolean isPublic = cls.isPublic();
+        boolean isAbstract = cls.isAbstract();
+        boolean isFinal = cls.isFinal();
+
+        //Type superClass = (Type) cls.getSuperClass(); // "com.base.SubClass";
+        //Type[] imps     = (Type[]) cls.getImplements(); // {"java.io.Serializable",
+        //  "com.custom.CustomInterface"}
+        JavaField nameField = cls.getFields()[0];
+        javaMethods = cls.getMethods();
+
+        methodMax = javaMethods.length;
+        methodBlock = javaMethods[methodIndex].getCodeBlock();
+        methodIndex = methodIndex + 1;
+
+        JavaMethod getNumber = cls.getMethods()[1];
+        JavaSource javaSource = cls.getParentSource();
+
+    }
+    //**************************************************************************
+
+    public String getNextMethodBlock()
+    {
+        String returnMethod = javaMethods[methodIndex].getCodeBlock();
+        methodIndex = methodIndex + 1;
+        return returnMethod;
+    }
+    //**************************************************************************
+
+    public boolean moreMethods()
+    {
+        if (methodIndex < methodMax)
+        {
+            return true;
+        }
+        return false;
     }
     //**************************************************************************
 }

@@ -94,16 +94,16 @@ public class SpacialCube extends SpacialObject {
     //**************************************************************************
     private void drawFace(GL gl, float faceSize, float r, float g, float b, String text)
     {
-        float halfFaceSize = faceSize / 2;
-        gl.glColor3f(r, g, b);
-        Globals.renderer.begin3DRendering();
-        gl.glDisable(GL.GL_DEPTH_TEST);
+        //float halfFaceSize = faceSize / 2;
+        //gl.glColor3f(r, g, b);
+        //Globals.renderer.begin3DRendering();
+        //gl.glDisable(GL.GL_DEPTH_TEST);
         //gl.glEnable(GL.GL_CULL_FACE);
-        Rectangle2D bounds = Globals.renderer.getBounds(text);
-        float w = (float) bounds.getWidth();
-        float h = (float) bounds.getHeight();
-        Globals.renderer.draw3D(text, w / -2.0f * Globals.textScaleFactor, h / -2.0f * Globals.textScaleFactor, halfFaceSize, Globals.textScaleFactor);
-        Globals.renderer.end3DRendering();
+        //Rectangle2D bounds = Globals.renderer.getBounds(text);
+        //float w = (float) bounds.getWidth();
+        //float h = (float) bounds.getHeight();
+        //Globals.renderer.draw3D(text, w / -2.0f * Globals.textScaleFactor, h / -2.0f * Globals.textScaleFactor, halfFaceSize, Globals.textScaleFactor);
+        //Globals.renderer.end3DRendering();
     }
     //**************************************************************************
 }

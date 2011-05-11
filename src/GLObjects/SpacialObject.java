@@ -44,6 +44,14 @@ public class SpacialObject {
         G = vG;
         B = vB;
     }
+    //**************************************************************************
+
+    public void setPosition(float vX, float vY, float vZ)
+    {
+        X = vX;
+        Y = vY;
+        Z = vZ;
+    }
 
     //**************************************************************************
     public void increaseX(float vX)

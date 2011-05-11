@@ -29,7 +29,7 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
     Universe universe;
     HeadsUpDisplay hud;
     Commands commands;
-    public cgFonts fonts;
+    cgFonts fonts;
 
     //**************************************************************************
     public static void main(String[] args)
@@ -92,18 +92,14 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
     @Override
     public void init(GLAutoDrawable drawable)
     {
-        Globals.renderer = new TextRenderer(new Font("SansSerif", Font.PLAIN, 18));
         glu = new GLU();
         glut = new GLUT();
         gl = drawable.getGL();
         gl.glEnable(GL.GL_DEPTH_TEST);
         Globals.camera = new CameraView();
         Globals.hudCamera = new CameraView();
+        Globals.hudCamera.dv.setPosition(0, 0, 25f);
 
-        Rectangle2D bounds = Globals.renderer.getBounds("Bottom");
-        float w = (float) bounds.getWidth();
-        float h = (float) bounds.getHeight();
-        Globals.textScaleFactor = 1.0f / (w * 1.1f);
         universe = new Universe();
         hud = new HeadsUpDisplay(gl, glu, glut);
         commands = new Commands();
@@ -140,17 +136,31 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         universe.draw();
         gl.glPopMatrix();
         
+        //gl.glPushAttrib(gl.GL_CURRENT_BIT);
         //VScene.draw(gl);
         gl.glViewport(0, 0, Globals.frameWidth, Globals.hudHeight);
-        gl.glMatrixMode(GL.GL_MODELVIEW);
+        gl.glMatrixMode (gl.GL_MODELVIEW);
+        //gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        
-        Globals.hudCamera.draw(glu);
         gl.glOrtho(0, Globals.frameWidth, 0, Globals.hudHeight, 0, 0);
-        fonts.setScale(0.05f, 0.05f, 0.0f);
-        fonts.setColor(0, 1, 0);
-        fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, -8, 0, 0, "ORTHO");
-        hud.draw();
+        //gl.glMatrixMode (gl.GL_MODELVIEW);
+	//gl.glLoadIdentity ();	
+	//gl.glClear (gl.GL_DEPTH_BUFFER_BIT);	
+        
+        gl.glBegin(gl.GL_QUADS);							// Begin Drawing A Single Quad
+				// We Fill The Entire 1/4 Section With A Single Textured Quad.
+				gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex2i(500, 0              );
+				gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex2i(0,              0              );
+				gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex2i(0,              500);
+				gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex2i(500, 500);
+	gl.glEnd();		
+        //Globals.hudCamera.draw(glu);
+        //fonts.setScale(0.05f, 0.05f, 0.0f);
+        //fonts.setColor(0, 1, 0);
+        //fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, 0, 0, 0, "ORTHO");
+        //hud.draw();
+        //gl.glPopAttrib();
+        gl.glFlush();
     }
 
     //**************************************************************************

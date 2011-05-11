@@ -38,17 +38,26 @@ public class Universe {
         plane1 = new SpacialPlane(gl, glu, -2, -6, 0);
         plane1.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/KAMEN.jpg");
         plane1.setColor(.7f, .8f, .2f);
+        plane1.setSize(3,3);
         objectList.add(plane1);
         plane2 = new SpacialPlane(gl, glu, 0, 0, 0);
-        plane2.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/NeHe.png");
+        plane2.LoadGLTextures("/home/tbfoster/NetBeansProjects/SpacialDemo/data/KAMEN.jpg");
         plane2.setColor(1f, 1f, 0f);
+        plane2.setSize(2,2);
         objectList.add(plane2);
 
-        SpacialJavaClass jc = new SpacialJavaClass(gl, glu, glut, 0, 5, 0, "Demo.java", "/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Demo.java");
-        jc.compile();
-        jc.init();
-        jc.viewFunction = true;
-        objectList.add(jc);
+        ParseJava parser = new ParseJava();
+        parser.parseFile("/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Demo.java");
+        SpacialJavaMethod jc;
+        int x = 0;
+        while(parser.moreMethods())
+        {
+            jc = new SpacialJavaMethod(gl, glu, glut, x, 0, 0, parser.getNextMethodBlock());
+            jc.compile();
+            jc.viewFunction = true;
+            objectList.add(jc);
+            x = x + 60;
+        }
 
         for (int i = 1; i < 25; i++)
         {
@@ -115,12 +124,12 @@ public class Universe {
             {
                 System.out.println(file);
                 file.getName();
-                SpacialJavaClass jc = new SpacialJavaClass(gl, glu, glut, xx, y, z, file.getName(), file.getAbsolutePath());
+                //SpacialJavaMethod jc = new SpacialJavaMethod(gl, glu, glut, xx, y, z, file.getName(), file.getAbsolutePath());
                 if (i == 0)
                 {
-                    jc.viewFunction = true;
+                    //jc.viewFunction = true;
                 }
-                objectList.add(jc);
+                //objectList.add(jc);
                 xx = xx - .5f;
             }
         } catch (FileNotFoundException ex)

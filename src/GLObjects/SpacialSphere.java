@@ -15,7 +15,7 @@ import javax.media.opengl.glu.GLUquadric;
 public class SpacialSphere extends SpacialObject {
 
     public GLUquadric quadric;
-    private static ByteBuffer imageBuf1;
+    private ByteBuffer imageBuf1;
     public static Texture text;
 
     //**************************************************************************

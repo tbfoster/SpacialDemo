@@ -6,7 +6,7 @@ import java.util.Timer;
 //******************************************************************************
 public class Globals {
 
-    public static TextRenderer renderer;
+    //public static TextRenderer renderer;
     public static float textScaleFactor;
     public static float movementSensitivity = 0.01f;
     public static float mouseSensitivity = 0.4f;
