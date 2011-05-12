@@ -2,19 +2,26 @@ package GLObjects;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import javax.media.opengl.GL;
 import processing.core.PVector;
 
 //******************************************************************************
 public class Commands {
 
+    MoveControl mc = new MoveControl();
     boolean commandForward = false;
     boolean commandBackward = false;
     boolean commandLeft = false;
     boolean commandRight = false;
-    int commandBackwardCount = 0;
-    int commandForwardCount = 0;
+    int commandMovementMax = 100;
     private int prevMouseX, prevMouseY;
     private boolean mouseRButtonDown = false;
+
+    //**************************************************************************
+    Commands()
+    {
+        mc.init();
+    }
 
     //**************************************************************************
     public void keyPressed(KeyEvent e)
@@ -30,7 +37,7 @@ public class Commands {
                 break;
             case '+':
                 //CameraView.dirVector.increaseSpeed();
-                
+
                 break;
             case '-':
                 //CameraView.dirVector.decreaseSpeed();
@@ -51,19 +58,12 @@ public class Commands {
             case 'S':
             {
                 commandBackward = true;
-                commandBackwardCount++;
                 break;
             }
             case 'w':
             case 'W':
             {
                 commandForward = true;
-                commandForwardCount++;
-                if (commandForwardCount > 2)
-                {
-                    Globals.camera.dv.increaseSpeed();
-                    commandForwardCount = 0;
-                }
                 break;
             }
             case 't':
@@ -94,37 +94,49 @@ public class Commands {
             case 'S':
             {
                 commandBackward = false;
-                commandBackwardCount = 0;
                 break;
             }
             case 'w':
             case 'W':
             {
                 commandForward = false;
-                commandForwardCount = 0;
                 break;
             }
         }
     }
     //**************************************************************************
 
-    public void movementTimer()
+    public void move()
     {
+        boolean moveOn = false;
         if (commandForward)
         {
             Globals.camera.dv.moveForward();
+            moveOn = true;
         }
         if (commandBackward)
         {
             Globals.camera.dv.moveBackward();
+            moveOn = true;
         }
         if (commandLeft)
         {
-            Globals.camera.dv.strafe(-Globals.movementSensitivity);
+            Globals.camera.dv.strafeLeft();
+            moveOn = true;
         }
         if (commandRight)
         {
-            Globals.camera.dv.strafe(Globals.movementSensitivity);
+            Globals.camera.dv.strafeRight();
+            moveOn = true;
+        }
+        
+        if (moveOn)
+        {
+            mc.movementOn();
+        } 
+        else
+        {
+            mc.movementOff();
         }
     }
     //**************************************************************************

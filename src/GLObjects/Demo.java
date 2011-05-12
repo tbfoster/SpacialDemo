@@ -113,6 +113,7 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         //VScene = new V3dsScene(gl, "sponza.3ds");
         //VScene = new V3dsScene(gl, "test.3ds");
         //VScene = new V3dsScene(gl, "Beast.3ds");
+        
     }
 
     //**************************************************************************
@@ -126,7 +127,7 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
         Globals.camera.draw(glu);
-        commands.movementTimer();
+        commands.move();
         fonts.setScale(0.005f, 0.005f, 0.0f);
         fonts.setColor(1, 0, 0);
         fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, 2, 2, 0, "testdddddddddddddddddddddddddddddddddddddddddddddddddddd");
@@ -136,23 +137,9 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
 
         gl.glColor3f(1, 1, 1);
         gl.glViewport(0, 0, Globals.frameWidth, Globals.hudHeight);
-        //gl.glMatrixMode (gl.GL_PROJECTION);
         gl.glLoadIdentity();
         gl.glOrtho(0, Globals.frameWidth, 0, Globals.hudHeight, 0, 0);
         
-        //gl.glMatrixMode(GL.GL_PROJECTION);
-        //gl.glLoadIdentity();
-        
-        //gl.glMatrixMode (gl.GL_MODELVIEW);
-        //gl.glLoadIdentity();	
-
-        //gl.glBegin(gl.GL_QUADS);							
-        //    gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex2i(500, 0              );
-        //    gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex2i(0,              0              );
-        //    gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex2i(0,              500);
-        //    gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex2i(500, 500);
-        //gl.glEnd();		
-
         Globals.hudCamera.draw(glu);
         hud.draw();
         gl.glPopAttrib();

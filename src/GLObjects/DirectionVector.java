@@ -1,18 +1,15 @@
 package GLObjects;
 
-//import javax.vecmath.Matrix4d;
 import processing.core.PVector;
 
 public final class DirectionVector {
 
-    //public Matrix4d transform4D = new Matrix4d();
     public PVector nPosition = new PVector();
     public PVector nRight = new PVector();
     public PVector nUp = new PVector();
     public PVector nTarget = new PVector();
     public PVector plotPosition = new PVector();
     public float zoomFactor = 2f;
-    public float speed = 0.01f, max_speed = 5;
 
     //**************************************************************************
     public DirectionVector(float vX, float vY, float vZ)
@@ -53,7 +50,7 @@ public final class DirectionVector {
     //**************************************************************************
     public void resetTransformationMatrix()
     {
-       // transform4D.setIdentity();
+        // transform4D.setIdentity();
     }
 
     //**************************************************************************
@@ -73,7 +70,9 @@ public final class DirectionVector {
         {
             projectedTarget.x = 0;
             projectedTarget.normalize();
-            nRight.x = 1.0f;  nRight.y = 0f;  nRight.z = 0f;
+            nRight.x = 1.0f;
+            nRight.y = 0f;
+            nRight.z = 0f;
             nUp = cgCrossProduct(projectedTarget, nRight);
             nTarget = vTarget;
             PVector x = new PVector();
@@ -83,7 +82,9 @@ public final class DirectionVector {
         {
             projectedTarget.y = 0f;
             projectedTarget.normalize();
-            nUp.x = 0f;  nUp.y = 1.0f;  nUp.z = 0f;
+            nUp.x = 0f;
+            nUp.y = 1.0f;
+            nUp.z = 0f;
             PVector temp = new PVector();
             temp = cgCrossProduct(projectedTarget, nUp);
             nRight = cgVecScalarMult(temp, -1);
@@ -117,9 +118,15 @@ public final class DirectionVector {
     }
     //**************************************************************************
 
-    public void strafe(float vAmount)
+    public void strafeLeft()
     {
-        nPosition = PVector.add(nPosition, PVector.mult(nRight, vAmount));
+        nPosition = cgVecAdd(nPosition, cgVecScalarMult(nRight, -Globals.speed));
+    }
+
+    //**************************************************************************
+    public void strafeRight()
+    {
+        nPosition = cgVecAdd(nPosition, cgVecScalarMult(nRight, Globals.speed));
     }
 
     //**************************************************************************
@@ -228,38 +235,18 @@ public final class DirectionVector {
 
     public void moveForward()
     {
-        nPosition.x = nPosition.x + (nTarget.x * speed);
-        nPosition.y = nPosition.y + (nTarget.y * speed);
-        nPosition.z = nPosition.z + (nTarget.z * speed);
+        nPosition.x = nPosition.x + (nTarget.x * Globals.speed);
+        nPosition.y = nPosition.y + (nTarget.y * Globals.speed);
+        nPosition.z = nPosition.z + (nTarget.z * Globals.speed);
     }
 
     //**************************************************************************
     public void moveBackward()
     {
-        nPosition.x = nPosition.x - (nTarget.x * speed);
-        nPosition.y = nPosition.y - (nTarget.y * speed);
-        nPosition.z = nPosition.z - (nTarget.z * speed);
+        nPosition.x = nPosition.x - (nTarget.x * Globals.speed);
+        nPosition.y = nPosition.y - (nTarget.y * Globals.speed);
+        nPosition.z = nPosition.z - (nTarget.z * Globals.speed);
     }
     //**************************************************************************
 
-    public void increaseSpeed()
-    {
-        speed = speed + Globals.increaseSpeedInterval;
-        if (speed > max_speed)
-        {
-            speed = max_speed;
-        }
-    }
-
-    //**************************************************************************
-    public void decreaseSpeed()
-    {
-        speed = speed - Globals.increaseSpeedInterval;
-        if (speed < 0)
-        {
-            speed = 0;
-        }
-    }
-
-    //**************************************************************************
 }

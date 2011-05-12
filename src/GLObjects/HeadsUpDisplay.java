@@ -27,6 +27,13 @@ public class HeadsUpDisplay {
         gl.glColor3f(1f, 1f, 1f);
         String temp = new Integer(Globals.FPS).toString();
         fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, -18, 0, 0, temp);
+        String temp2 = new Float(Globals.speed).toString();
+        fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, -18, 2, 0, temp2);
+        if(Globals.movementOn)
+            fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, -8, 2, 0, "ON");
+        else
+            fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, -8, 2, 0, "OFF");
+        
         gl.glPopMatrix();
     }
     //**************************************************************************
