@@ -5,10 +5,9 @@ import javax.media.opengl.GL;
 import javax.media.opengl.glu.GLU;
 import java.util.Scanner;
 
-public final class SpacialJavaMethod extends SpacialObject {
+public final class SpacialMethod extends SpacialObject {
 
     public String displayMethod = "test";
-    public boolean viewFunction = false;
     public float scaleX = 1.0f;
     public float scaleY = 1.0f;
     public float scaleZ = 1.0f;
@@ -16,13 +15,13 @@ public final class SpacialJavaMethod extends SpacialObject {
     SpacialPlane backPlane;
 
     //**************************************************************************
-    public SpacialJavaMethod(GL vgl, GLU vglu, float vX, float vY, float vZ)
+    public SpacialMethod(GL vgl, GLU vglu, float vX, float vY, float vZ)
     {
         super(vgl, vglu, vX, vY, vZ);
     }
     //**************************************************************************
 
-    public SpacialJavaMethod(GL vgl, GLU vglu, GLUT vglut, float vX, float vY, float vZ, String vDisplayMethod)
+    public SpacialMethod(GL vgl, GLU vglu, GLUT vglut, float vX, float vY, float vZ, String vDisplayMethod)
     {
         super(vgl, vglu, vX, vY, vZ);
         glut = vglut;
@@ -40,27 +39,19 @@ public final class SpacialJavaMethod extends SpacialObject {
     @Override
     public void compile()
     {
-        float y = -1f;
-        float x = 0f;
+        float y = Y;
         gl.glPushMatrix();
-        
+
         genListID = gl.glGenLists(Globals.genListIndex);
         gl.glNewList(genListID, gl.GL_COMPILE);
 
-        
         fonts.setColor(0, 1.0f, 0);
-        Scanner in = new Scanner(displayMethod);
-        while (in.hasNext())
-        {
-            String temp = in.nextLine();
-            fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, X, y, Z, temp);
-            y = y - 1;
-            if(x < temp.length()) x = temp.length();
-        }
-        backPlane.setPosition(X, y, Z-.5f);
-        backPlane.setSize(Y - y, 35);
+        fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, X, Y, Z, displayMethod);
+
+        backPlane.setPosition(X, Y-1, Z - .5f);
+        backPlane.setSize(8, 1);
         backPlane.draw();
-        
+
         gl.glEndList();
         gl.glPopMatrix();
     }
@@ -69,9 +60,10 @@ public final class SpacialJavaMethod extends SpacialObject {
     @Override
     public void draw()
     {
-        gl.glCallList(genListID);
+        if (active)
+        {
+            gl.glCallList(genListID);
+        }
     }
     //**************************************************************************
-
-    
 }

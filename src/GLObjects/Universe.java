@@ -45,29 +45,44 @@ public class Universe {
         plane2.setColor(1f, 1f, 0f);
         plane2.setSize(2,2);
         objectList.add(plane2);
+        
+        SpacialClass sc = new SpacialClass(3, 0, 0, "/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Demo.java");
+        sc.addAllMethods(gl, glu, glut, objectList);
 
         ParseJava parser = new ParseJava();
         parser.parseFile("/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Demo.java");
         int x = 0;
+        int y = 0;
         while(parser.moreMethods())
         {
-            SpacialJavaMethod jc = new SpacialJavaMethod(gl, glu, glut, x, 0, 0, parser.getNextMethodBlock());
+            
+            
+            SpacialMethodSource jc = new SpacialMethodSource(gl, glu, glut, x, y, 2, parser.getNextMethodBlock());
             jc.compile();
-            jc.viewFunction = true;
-            objectList.add(jc);
-            x = x + 60;
+            //jc.active = true;
+            //objectList.add(jc);
+            
+            SpacialMethod sm = new SpacialMethod(gl, glu, glut, x, y, 0, parser.currentMethodName);
+            sm.compile();
+            sm.active = true;
+            //objectList.add(sm);
+            
+            //x = x + 60;
+            y = y - 1;
         }
-        
+        /*
         parser.parseFile("/home/tbfoster/NetBeansProjects/SpacialDemo/src/GLObjects/Universe.java");
         x = 0;
         while(parser.moreMethods())
         {
             SpacialJavaMethod jc = new SpacialJavaMethod(gl, glu, glut, x, 5, -5, parser.getNextMethodBlock());
             jc.compile();
-            jc.viewFunction = true;
+            jc.active = true;
             objectList.add(jc);
             x = x + 60;
         }
+         * 
+         */
 
         for (int i = 1; i < 25; i++)
         {

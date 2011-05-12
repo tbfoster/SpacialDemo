@@ -128,9 +128,6 @@ public class Demo implements GLEventListener, MouseListener, MouseMotionListener
         gl.glLoadIdentity();
         Globals.camera.draw(glu);
         commands.move();
-        fonts.setScale(0.005f, 0.005f, 0.0f);
-        fonts.setColor(1, 0, 0);
-        fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, 2, 2, 0, "testdddddddddddddddddddddddddddddddddddddddddddddddddddd");
         universe.draw();
         gl.glPopAttrib();
               

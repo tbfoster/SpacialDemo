@@ -6,10 +6,10 @@ public class MoveControl {
     //**************************************************************************
 
     //public boolean Globals.movementOn = false;
-    public float maxSpeed = 5;
-    public float speedIncrement = 0.5f;
+    public float maxSpeed = 1f;
+    public float speedIncrement = 0.2f;
     public int threshold = 0;
-    public int nextThreshold = 10;
+    public int nextThreshold = 5;
     public int commandMovementMax = 100;
     public int commandMovementCount = 0;
 

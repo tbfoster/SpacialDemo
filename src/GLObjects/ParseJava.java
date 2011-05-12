@@ -18,6 +18,7 @@ public class ParseJava {
     public JavaClass[] javaClasses;
     public JavaMethod[] javaMethods;
     public String methodBlock;
+    String currentMethodName;
     private int methodIndex = 0;
     private int methodMax = 0;
 
@@ -32,7 +33,7 @@ public class ParseJava {
             builder.addSource(new FileReader(parseFileName));
         } catch (FileNotFoundException ex)
         {
-            Logger.getLogger(SpacialJavaMethod.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SpacialMethodSource.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         JavaClass cls = builder.getClassByName("GLObjects.Demo");
@@ -54,6 +55,7 @@ public class ParseJava {
 
         methodMax = javaMethods.length;
         methodBlock = javaMethods[methodIndex].getCodeBlock();
+        currentMethodName = javaMethods[methodIndex].getName();
         methodIndex = methodIndex + 1;
 
         JavaMethod getNumber = cls.getMethods()[1];
@@ -65,6 +67,7 @@ public class ParseJava {
     public String getNextMethodBlock()
     {
         String returnMethod = javaMethods[methodIndex].getCodeBlock();
+        currentMethodName = javaMethods[methodIndex].getName();
         methodIndex = methodIndex + 1;
         return returnMethod;
     }

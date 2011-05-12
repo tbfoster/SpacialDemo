@@ -19,6 +19,7 @@ public class SpacialObject {
     public static GL gl;
     public static GLU glu;
     public static GLUT glut;
+    public boolean active = false;
     int genListID;
 
     //**************************************************************************
