@@ -1,14 +1,15 @@
 package GLObjects;
 
+import com.sun.opengl.util.GLUT;
 import javax.media.opengl.GL;
 import javax.media.opengl.glu.GLU;
 
 public class SpacialLines extends SpacialObject {
     float EndX, EndY, EndZ;
 
-    public SpacialLines(GL vgl, GLU vglu, float vX, float vY, float vZ)
+    public SpacialLines(GL vgl, GLU vglu, GLUT vglut, float vX, float vY, float vZ)
     {
-        super(vgl, vglu, vX, vY, vZ);
+        super(vgl, vglu, vglut, vX, vY, vZ);
     }
 
     //**************************************************************************

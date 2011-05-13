@@ -23,7 +23,7 @@ public class SpacialObject {
     int genListID;
 
     //**************************************************************************
-    public SpacialObject(GL vgl, GLU vglu, float vX, float vY, float vZ)
+    public SpacialObject(GL vgl, GLU vglu, GLUT vglut, float vX, float vY, float vZ)
     {
         xAngle = 0;  // This may need to change depending on where view begins from
         yAngle = 180;
@@ -36,6 +36,7 @@ public class SpacialObject {
         B = 1;
         gl = vgl;
         glu = vglu;
+        glut = vglut;
     }
 
     //**************************************************************************

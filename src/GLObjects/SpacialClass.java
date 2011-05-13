@@ -1,41 +1,96 @@
 package GLObjects;
 
 import com.sun.opengl.util.GLUT;
-import com.sun.org.apache.xerces.internal.xs.StringList;
 import com.thoughtworks.qdox.model.JavaMethod;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.media.opengl.GL;
 import javax.media.opengl.glu.GLU;
 
-public class SpacialClass {
+public class SpacialClass extends SpacialObject {
 
+    public static ArrayList methodObjects = new ArrayList();
     String className = "test";
     public JavaMethod[] methods;
-    public float X = 0, Y = 0, Z = 0;
 
     //**************************************************************************
-    SpacialClass(float vX, float vY, float vZ, String fileName)
+    public SpacialClass(GL vgl, GLU vglu, GLUT vglut, float vX, float vY, float vZ, String fileName, String vClassName)
     {
+        super(vgl, vglu, vglut, vX, vY, vZ);
+        float x = vX;
+        float y = vY;
+        float z = vZ;
+        className = vClassName;
         ParseJava parser = new ParseJava();
-        parser.parseFile(fileName);
+        parser.parseFile(fileName, className);
         methods = parser.javaMethods;
         X = vX;
         Y = vY;
         Z = vZ;
+        for (int i = 0; i < methods.length; i++)
+        {
+            SpacialMethodSource sm = new SpacialMethodSource(gl, glu, glut, x, y, z, methods[i].getName(), methods[i].getCodeBlock());
+            sm.compile();
+            sm.active = true;
+            methodObjects.add(sm);
+            y = y - 1f;
+            x = x + 1f;
+            z = z + 1f;
+        }
     }
     //**************************************************************************
 
-    public void addAllMethods(GL gl, GLU glu, GLUT glut, ArrayList vObjectList)
+    public void activate()
     {
-        float y = Y;
-        for (int i = 0; i < methods.length; i++)
+        SpacialMethodSource obj;
+        int index = 0;
+        active = true;
+        Iterator itr = methodObjects.iterator();
+        while (itr.hasNext())
         {
-            SpacialMethod jc = new SpacialMethod(gl, glu, glut, X, y, Z, methods[i].getName());
-            jc.compile();
-            jc.active = true;
-            vObjectList.add(jc);
-            y = y - 1;
+            obj = (SpacialMethodSource) methodObjects.get(index);
+            obj.active = true;
+            index = index + 1;
+            itr.next();
+        }
+        active = true;
+    }
+    //**************************************************************************
+
+    public void deactivate()
+    {
+        SpacialMethodSource obj;
+        int index = 0;
+        active = true;
+        Iterator itr = methodObjects.iterator();
+        while (itr.hasNext())
+        {
+            obj = (SpacialMethodSource) methodObjects.get(index);
+            obj.active = false;
+            index = index + 1;
+            itr.next();
+        }
+        active = false;
+    }
+
+    //**************************************************************************
+    @Override
+    public void draw()
+    {
+        if (!active)
+        {
+            return;
+        }
+
+        SpacialMethodSource obj;
+        int index = 0;
+        Iterator itr = methodObjects.iterator();
+        while (itr.hasNext())
+        {
+            obj = (SpacialMethodSource) methodObjects.get(index);
+            obj.draw();
+            index = index + 1;
+            itr.next();
         }
     }
     //**************************************************************************

@@ -1,14 +1,15 @@
 package GLObjects;
 
+import com.sun.opengl.util.GLUT;
 import java.awt.geom.Rectangle2D;
 import javax.media.opengl.GL;
 import javax.media.opengl.glu.GLU;
 
 public class SpacialCube extends SpacialObject {
 
-    public SpacialCube(GL vgl, GLU vglu, float vX, float vY, float vZ)
+    public SpacialCube(GL vgl, GLU vglu, GLUT vglut, float vX, float vY, float vZ)
     {
-        super(vgl, vglu, vX, vY, vZ);
+        super(vgl, vglu, vglut, vX, vY, vZ);
     }
 
     //**************************************************************************

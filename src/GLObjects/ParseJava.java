@@ -23,7 +23,7 @@ public class ParseJava {
     private int methodMax = 0;
 
     //**************************************************************************
-    public void parseFile(String parseFileName)
+    public void parseFile(String parseFileName, String className)
     {
         methodIndex = 0;
         methodMax = 0;
@@ -36,7 +36,7 @@ public class ParseJava {
             Logger.getLogger(SpacialMethodSource.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        JavaClass cls = builder.getClassByName("GLObjects.Demo");
+        JavaClass cls = builder.getClassByName(className);
 
         //String pkg      = cls.getPackage();            // "com.blah.foo"
         String name = cls.getName();                     // "MyClass"

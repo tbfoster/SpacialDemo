@@ -1,5 +1,6 @@
 package GLObjects;
 
+import com.sun.opengl.util.GLUT;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 import java.awt.image.BufferedImage;
@@ -17,9 +18,9 @@ public class SpacialPlane extends SpacialObject {
     float height = 1;
     boolean imageLoaded = false;
 
-    public SpacialPlane(GL vgl, GLU vglu, float vX, float vY, float vZ)
+    public SpacialPlane(GL vgl, GLU vglu, GLUT vglut, float vX, float vY, float vZ)
     {
-        super(vgl, vglu, vX, vY, vZ);
+        super(vgl, vglu, vglut, vX, vY, vZ);
     }
 
     //**************************************************************************

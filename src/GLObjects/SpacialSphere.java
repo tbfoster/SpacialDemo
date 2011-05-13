@@ -1,5 +1,6 @@
 package GLObjects;
 
+import com.sun.opengl.util.GLUT;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureData;
 import com.sun.opengl.util.texture.TextureIO;
@@ -19,9 +20,9 @@ public class SpacialSphere extends SpacialObject {
     public static Texture text;
 
     //**************************************************************************
-    public SpacialSphere(GL vgl, GLU vglu, float vX, float vY, float vZ)
+    public SpacialSphere(GL vgl, GLU vglu, GLUT vglut,  float vX, float vY, float vZ)
     {
-        super(vgl, vglu, vX, vY, vZ);
+        super(vgl, vglu, vglut, vX, vY, vZ);
         quadric = glu.gluNewQuadric();
         glu.gluQuadricNormals(quadric, GLU.GLU_SMOOTH);  // Create Smooth Normals (NEW)
         glu.gluQuadricTexture(quadric, true);
