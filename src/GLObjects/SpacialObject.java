@@ -20,6 +20,7 @@ public class SpacialObject {
     public static GLU glu;
     public static GLUT glut;
     public boolean active = false;
+    public boolean selected = false;
     int genListID;
 
     //**************************************************************************

@@ -32,8 +32,10 @@ public class SpacialClass extends SpacialObject {
             SpacialMethodSource sm = new SpacialMethodSource(gl, glu, glut, x, y, z, methods[i].getName(), methods[i].getCodeBlock());
             sm.compile();
             sm.active = true;
+            if(i==5) sm.selected = true;
             methodObjects.add(sm);
-            y = y - 1f;
+            
+            y = y - 2f;
             x = x + 1f;
             z = z + 1f;
         }
