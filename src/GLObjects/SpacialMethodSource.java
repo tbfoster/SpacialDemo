@@ -7,12 +7,18 @@ import java.util.Scanner;
 
 public final class SpacialMethodSource extends SpacialObject {
 
+    float TEXT_BACKGROUND_OFFSET = 0.5f;
+    float TEXT_SELECT_OFFSET = .3f;
     public String methodCodeBlock = "test";
     public String methodName = "test";
     public float scaleX = 1.0f;
     public float scaleY = 1.0f;
     public float scaleZ = 1.0f;
-    float y = Y;
+    float windowX, windowY, windowZ;
+    float selectX, selectY, selectZ;
+    float backgroundWidth = 45;  // 50 handles about 80 characters
+    float backgroundHeight;
+    float endY = Y;
     float x = 0f;
     cgFonts fonts;
     SpacialPlane backPlane;
@@ -46,13 +52,13 @@ public final class SpacialMethodSource extends SpacialObject {
     @Override
     public void compile()
     {
-        y = Y;
+        endY = Y;
         x = 0f;
-          SpacialSphere tSphere = new SpacialSphere(gl, glu, glut, X, Y, Z-.3f);
-            tSphere.setColor(1f, 1f, 1f);
-            tSphere.compile();
-            Universe.objectList.add(tSphere);
-            
+        SpacialSphere tSphere = new SpacialSphere(gl, glu, glut, X, Y, Z - .5f);
+        tSphere.setColor(1f, 1f, 1f);
+        tSphere.compile();
+        Universe.objectList.add(tSphere);
+
         gl.glPushMatrix();
 
         genListID = gl.glGenLists(Globals.genListIndex);
@@ -67,22 +73,27 @@ public final class SpacialMethodSource extends SpacialObject {
             {
                 temp = temp.substring(1, 80);
             }
-            fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, X, y, Z, temp);  // for now, trim to 80 - TODO
-            y = y - 1;
+            fonts.renderStrokeString(gl, GLUT.STROKE_MONO_ROMAN, X, endY, Z, temp);  // for now, trim to 80 - TODO
+            endY = endY - 1;
             if (x < temp.length())
             {
                 x = temp.length();
             }
         }
+        windowX = X - .5f;
+        windowY = endY + 1f;
+        windowZ = Z - TEXT_BACKGROUND_OFFSET;
+        backgroundHeight = Y - endY;
+        selectX = windowX + .2f;
+        selectY = Y - .5f;
+        selectZ = Z - TEXT_SELECT_OFFSET;
 
-        backPlane.setPosition(X - .5f, y + 1f, Z - .5f);
-        backPlane.setSize((Y - y), 45);  // 50 handles about 
+        backPlane.setPosition(windowX, windowY, windowZ);
+        backPlane.setSize(backgroundWidth - .2f, backgroundHeight);  // 50 handles about 
         backPlane.draw();
 
-        //if (selected)
-        {
-          
-        }
+        highlightPlane.setPosition(selectX, selectY, selectZ);
+        highlightPlane.setSize(backgroundWidth - TEXT_BACKGROUND_OFFSET, 1.5f);  
 
         gl.glEndList();
         gl.glPopMatrix();
@@ -95,12 +106,10 @@ public final class SpacialMethodSource extends SpacialObject {
         if (active)
         {
             gl.glCallList(genListID);
-        }
-        if (selected)
-        {
-            highlightPlane.setPosition(X - .5f, y + 1f, Z - .3f);
-            highlightPlane.setSize(1, 45);  // 50 handles about 
-            highlightPlane.draw();
+            if (selected)
+            {
+                highlightPlane.draw();
+            }
         }
     }
     //**************************************************************************

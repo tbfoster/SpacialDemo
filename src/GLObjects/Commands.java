@@ -8,6 +8,7 @@ import processing.core.PVector;
 //******************************************************************************
 public class Commands {
 
+    int selectClass = 0;
     MoveControl mc = new MoveControl();
     boolean commandForward = false;
     boolean commandBackward = false;
@@ -29,11 +30,18 @@ public class Commands {
         char key = e.getKeyChar();
         switch (key)
         {
+            case '1':
+                selectClass = 0;
+                break;
+            case '2':
+                selectClass = 1;
+                break;
             case KeyEvent.VK_HOME:
             case 'm':
-                //Demo.CameraView.dv.setPosition(0f, 0f, 20f);
-                //PVector pv = new PVector(0, 0, 0);
-                //CameraView.dirVector.setTarget(pv);
+                SpacialClass obj;
+                obj = (SpacialClass) Universe.classList.get(selectClass);
+                obj.nextIndex();
+                //Universe.classList.set(1, obj);
                 break;
             case '+':
                 //CameraView.dirVector.increaseSpeed();

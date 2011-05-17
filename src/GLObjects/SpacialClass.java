@@ -9,9 +9,10 @@ import javax.media.opengl.glu.GLU;
 
 public class SpacialClass extends SpacialObject {
 
-    public static ArrayList methodObjects = new ArrayList();
+    public ArrayList methodObjects = new ArrayList();
     String className = "test";
     public JavaMethod[] methods;
+    public int selectedIndex = 0;
 
     //**************************************************************************
     public SpacialClass(GL vgl, GLU vglu, GLUT vglut, float vX, float vY, float vZ, String fileName, String vClassName)
@@ -32,13 +33,14 @@ public class SpacialClass extends SpacialObject {
             SpacialMethodSource sm = new SpacialMethodSource(gl, glu, glut, x, y, z, methods[i].getName(), methods[i].getCodeBlock());
             sm.compile();
             sm.active = true;
-            if(i==5) sm.selected = true;
+            if(i==selectedIndex) sm.selected = true;
             methodObjects.add(sm);
             
             y = y - 2f;
             x = x + 1f;
             z = z + 1f;
         }
+        System.out.println("Class: " + className + " has: " + methods.length);
     }
     //**************************************************************************
 
@@ -95,5 +97,20 @@ public class SpacialClass extends SpacialObject {
             itr.next();
         }
     }
+    //**************************************************************************
+    public void nextIndex()
+    {
+        SpacialMethodSource obj;
+        obj = (SpacialMethodSource) methodObjects.get(selectedIndex);
+        obj.selected = false;
+        selectedIndex = selectedIndex + 1;
+        if(selectedIndex > methodObjects.size() - 1)
+        {
+            selectedIndex = 0;
+        }
+        obj = (SpacialMethodSource) methodObjects.get(selectedIndex);
+        obj.selected = true;
+    }
+
     //**************************************************************************
 }
